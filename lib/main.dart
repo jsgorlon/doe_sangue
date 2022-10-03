@@ -1,20 +1,8 @@
-import 'package:doe_sangue/screens/android/donorStats.screens.dart';
 import 'package:flutter/material.dart';
+import 'dart:io';
+import 'package:doe_sangue/views/android/android.app.dart';
+import 'package:doe_sangue/views/ios/ios.app.dart';
 
 void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'DoeSangue',
-      theme: ThemeData.dark(),
-      home: DonorStats(),
-    );
-  }
+  runApp(Platform.isIOS ? IosApp() : AndroidApp());
 }
