@@ -22,7 +22,7 @@ class UserStatsPage extends StatelessWidget {
               accountEmail: Text('Email@email.com'), //user data
             ),
             ListTile(
-              title: Text('Campanhas'),
+              title: Text('Minha conta'),
               onTap: () {
                 /// Next page address
               },
@@ -35,12 +35,6 @@ class UserStatsPage extends StatelessWidget {
             ),
             ListTile(
               title: Text('Sobre a doação'),
-              onTap: () {
-                /// Next page address
-              },
-            ),
-            ListTile(
-              title: Text('Minha conta'),
               onTap: () {
                 /// Next page address
               },
