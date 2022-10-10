@@ -1,3 +1,6 @@
+// ignore_for_file: prefer_const_constructors
+
+import 'package:doe_sangue/views/android/widgets/camapanha.card.dart';
 import 'package:flutter/material.dart';
 
 import '../../models/usuario.dart';
@@ -8,11 +11,67 @@ class UserStatsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('DoeSangue'),
+        iconTheme: const IconThemeData(
+          color: Colors.redAccent,
+        ),
+        bottom: TabBar(
+          indicatorColor: Colors.redAccent,
+          tabs: [
+            Tab(
+              icon: Icon(
+                Icons.query_stats_rounded,
+                color: Colors.redAccent,
+              ),
+            ),
+            Tab(
+              icon: SizedBox(
+                height: 40,
+                width: 40 * 1.5,
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Align(
+                      alignment: Alignment.bottomLeft,
+                      child: const Icon(
+                        Icons.volunteer_activism,
+                        color: Colors.redAccent,
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.topRight,
+                      child: const Icon(
+                        Icons.search_outlined,
+                        color: Colors.redAccent,
+                        size: 35,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Tab(
+              icon: Icon(
+                Icons.notifications,
+                color: Colors.redAccent,
+              ),
+            ),
+          ],
+        ),
+      ),
+      body: TabBarView(
+        children: [
+          Text('Tela1'),
+          Text('Tela2'),
+          Text('Tela2'),
+        ],
+      ),
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
-            UserAccountsDrawerHeader(
+            const UserAccountsDrawerHeader(
               currentAccountPicture: CircleAvatar(
                 backgroundImage: NetworkImage(
                   'https://thumbs.dreamstime.com/b/account-female-icon-128919363.jpg',
@@ -41,9 +100,6 @@ class UserStatsPage extends StatelessWidget {
             ),
           ],
         ),
-      ),
-      appBar: AppBar(
-        title: Text('DoeSangue'),
       ),
     );
   }

@@ -11,7 +11,10 @@ class AndroidApp extends StatelessWidget {
     return MaterialApp(
       title: 'DoeSangue',
       theme: ThemeData.dark(),
-      home: UserStatsPage(),
+      home: DefaultTabController(
+        length: 3,
+        child: UserStatsPage(),
+      ),
       routes: {
         '/userStats': (context) => UserStatsPage(),
       },
