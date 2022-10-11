@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:doe_sangue/views/android/widgets/camapanha.card.dart';
+//import 'package:doe_sangue/views/android/widgets/camapanha.card.dart';
 import 'package:flutter/material.dart';
 
 import '../../models/usuario.dart';
@@ -31,17 +31,17 @@ class UserStatsPage extends StatelessWidget {
                 width: 40 * 1.5,
                 child: Stack(
                   alignment: Alignment.center,
-                  children: [
+                  children: const [
                     Align(
                       alignment: Alignment.bottomLeft,
-                      child: const Icon(
+                      child: Icon(
                         Icons.volunteer_activism,
                         color: Colors.redAccent,
                       ),
                     ),
                     Align(
                       alignment: Alignment.topRight,
-                      child: const Icon(
+                      child: Icon(
                         Icons.search_outlined,
                         color: Colors.redAccent,
                         size: 35,
@@ -62,7 +62,134 @@ class UserStatsPage extends StatelessWidget {
       ),
       body: TabBarView(
         children: [
-          Text('Tela1'),
+          
+          //TELA 1 User Stats
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+
+              Column(
+                children: [Container(                  
+                  width: 75,
+                  height: 75,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                      image: AssetImage('assets/images/woman.png')), 
+                    ),
+                  ),
+
+                Text('Julia Silva', 
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.redAccent,
+                  ),
+                ),
+                ],
+              ),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+
+                  Column(
+                    children: const [
+                      Text('TOTAL DE DOAÇÕES', 
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.redAccent,
+                        ),
+                      ),
+                      Text('5', 
+                      style: TextStyle(
+                        fontSize: 22,
+                        color: Colors.white,
+                        ),)
+                    ],
+                  ),
+
+                  SizedBox(width: 32),
+
+                  Column(
+                    children: const [
+                      Text('ÚLTIMA DOAÇÃO', 
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.redAccent,
+                        ),
+                      ),
+                      Text('22/08/2022', 
+                      style: TextStyle(
+                        fontSize: 22,
+                        color: Colors.white,
+                        ),)
+                    ],
+                  ),
+
+                  SizedBox(width: 32),
+
+                  Column(
+                    children: const [
+                      Text('PRÓXIMA DOAÇÃO', 
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.redAccent,
+                        ),
+                      ),
+                      Text('22/11/2022', 
+                      style: TextStyle(
+                        fontSize: 22,
+                        color: Colors.white,
+                        ),)
+                    ],
+                  ),
+                ],
+              ),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextButton(
+                    onPressed: null, // Next page address
+                    style: TextButton.styleFrom(
+                      foregroundColor: Colors.black, backgroundColor: Colors.redAccent,
+                      fixedSize: const Size(150, 50),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(24),
+                      ),
+                    ), 
+                    child: const Text('Registrar Doação',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.white,
+                      ),
+                    ),
+                  ),
+
+                  SizedBox(width: 32),
+
+                  TextButton(
+                    onPressed: null, // Next page address
+                    style: TextButton.styleFrom(
+                      foregroundColor: Colors.black, backgroundColor: Colors.redAccent,
+                      fixedSize: const Size(150, 50),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(24),
+                      ),
+                    ), 
+                    child: const Text('Criar Campanha',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.white,
+                      ),
+                    ),
+                  ),
+
+                ],
+              )
+            ],
+          ),
+
           Text('Tela2'),
           Text('Tela2'),
         ],
