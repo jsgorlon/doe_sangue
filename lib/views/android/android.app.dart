@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:doe_sangue/views/android/userStats.page.dart';
+import 'package:doe_sangue/views/android/HomeTabbedPage.page.dart';
 
 class AndroidApp extends StatelessWidget {
   const AndroidApp({Key? key}) : super(key: key);
@@ -11,13 +11,8 @@ class AndroidApp extends StatelessWidget {
     return MaterialApp(
       title: 'DoeSangue',
       theme: ThemeData.dark(),
-      home: DefaultTabController(
-        length: 3,
-        child: UserStatsPage(),
-      ),
-      routes: {
-        '/userStats': (context) => UserStatsPage(),
-      },
+      home: TabbedHome(),
+      routes: {},
     );
   }
 }
