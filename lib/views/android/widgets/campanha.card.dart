@@ -6,7 +6,7 @@ class CampanhaCard extends StatelessWidget {
   final campanhaController = CampanhaController();
   late TabController tabController;
 
-  CampanhaCard(this.tabController);
+  CampanhaCard(this.tabController, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -38,14 +38,12 @@ class CampanhaCard extends StatelessWidget {
   }
 
   Widget _cardSubtitle(Campanha campanha) {
-    return Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text('Receptor: ${campanha.receptor ?? campanha.organizador!.nome!}'),
-          Text('Cidade : ${campanha.cidade}/ ${campanha.estado}')
-        ],
-      ),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text('Receptor: ${campanha.receptor ?? campanha.organizador!.nome!}'),
+        Text('Cidade : ${campanha.cidade}/ ${campanha.estado}')
+      ],
     );
   }
 
@@ -77,7 +75,7 @@ class CampanhaCard extends StatelessWidget {
                 context: context,
                 builder: (BuildContext context) =>
                     _donationConfirmation(context)),
-            child: Text('Registrar Doação'),
+            child: const Text('Registrar Doação'),
           )
         ],
       ),

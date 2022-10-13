@@ -32,7 +32,9 @@ class CampanhaController {
     campanhas.add(campanha);
   }
 
-  void update(Campanha campanha) {}
+  void update(Campanha campanha, int index) {
+    campanhas[index] = campanha;
+  }
 
   void delete(campanha) {}
 }
