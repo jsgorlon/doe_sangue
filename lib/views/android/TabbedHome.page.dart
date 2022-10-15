@@ -1,7 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 // ignore_for_file: prefer_const_literals_to_create_immutables
 
+import 'package:maps_launcher/maps_launcher.dart';
 import 'package:doe_sangue/views/android/widgets/campanha.card.dart';
+import 'package:doe_sangue/views/android/widgets/resumo.card.dart';
 import 'package:flutter/material.dart';
 
 import '../../models/usuario.dart';
@@ -101,137 +103,13 @@ class _TabbedHomeState extends State<TabbedHome>
       body: TabBarView(
         controller: _tabController,
         children: [
-          //TELA 1 User Stats
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Column(
-                children: [
-                  Container(
-                    width: 75,
-                    height: 75,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                          image: AssetImage('assets/images/woman.png')),
-                    ),
-                  ),
-                  Text(
-                    'Julia Silva',
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.redAccent,
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Column(
-                    children: const [
-                      Text(
-                        'TOTAL DE DOAÇÕES',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.redAccent,
-                        ),
-                      ),
-                      Text(
-                        '5',
-                        style: TextStyle(
-                          fontSize: 22,
-                          color: Colors.white,
-                        ),
-                      )
-                    ],
-                  ),
-                  SizedBox(width: 32),
-                  Column(
-                    children: const [
-                      Text(
-                        'ÚLTIMA DOAÇÃO',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.redAccent,
-                        ),
-                      ),
-                      Text(
-                        '22/08/2022',
-                        style: TextStyle(
-                          fontSize: 22,
-                          color: Colors.white,
-                        ),
-                      )
-                    ],
-                  ),
-                  SizedBox(width: 32),
-                  Column(
-                    children: const [
-                      Text(
-                        'PRÓXIMA DOAÇÃO',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.redAccent,
-                        ),
-                      ),
-                      Text(
-                        '22/11/2022',
-                        style: TextStyle(
-                          fontSize: 22,
-                          color: Colors.white,
-                        ),
-                      )
-                    ],
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  TextButton(
-                    onPressed: null, // Next page address
-                    style: TextButton.styleFrom(
-                      foregroundColor: Colors.black,
-                      backgroundColor: Colors.redAccent,
-                      fixedSize: const Size(150, 50),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(24),
-                      ),
-                    ),
-                    child: const Text(
-                      'Registrar Doação',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 32),
-                  TextButton(
-                    onPressed: () => Navigator.of(context)
-                        .pushNamed('/createCampanha'), // Next page address
-                    style: TextButton.styleFrom(
-                      foregroundColor: Colors.black,
-                      backgroundColor: Colors.redAccent,
-                      fixedSize: const Size(150, 50),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(24),
-                      ),
-                    ),
-                    child: const Text(
-                      'Criar Campanha',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ],
-              )
-            ],
-          ),
+          //TELA 1 Resumo
+          ResumoCard(_tabController),
+         
+         //TELA 2 Campanhas
           CampanhaCard(_tabController),
+
+          //TELA 3 Notificações
           Text('Tela3'),
         ],
       ),
@@ -257,16 +135,19 @@ class _TabbedHomeState extends State<TabbedHome>
                 /// Next page address
               },
             ),
+
             ListTile(
               title: Text('Localizar Hemocentro'),
               onTap: () {
-                /// Next page address
+                MapsLauncher.launchQuery(
+                    'hemocentro');                             
               },
             ),
+
             ListTile(
               title: Text('Sobre a doação'),
               onTap: () {
-                /// Next page address
+                Navigator.of(context).pushNamed('/about');
               },
             ),
           ],

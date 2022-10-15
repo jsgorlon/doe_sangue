@@ -1,8 +1,10 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:doe_sangue/views/android/login.page.dart';
 import 'package:doe_sangue/views/android/createCampanha.page.dart';
 import 'package:flutter/material.dart';
 import 'package:doe_sangue/views/android/TabbedHome.page.dart';
+import 'about.page.dart';
 
 class AndroidApp extends StatelessWidget {
   const AndroidApp({Key? key}) : super(key: key);
@@ -12,8 +14,9 @@ class AndroidApp extends StatelessWidget {
     return MaterialApp(
       title: 'DoeSangue',
       theme: ThemeData.dark(),
-      home: TabbedHome(),
+      home: LoginPage(),
       routes: {
+        '/about':(context) => AboutPage(),
         '/createCampanha': (context) => CreateCampanha(),
       },
     );

@@ -87,7 +87,7 @@ class CampanhaCard extends StatelessWidget {
       title: const Text('Confirmar doação?'),
       content: const Text(
           textAlign: TextAlign.justify,
-          'Uma fez confirmada você só podera doar novamente após o perídodo de recuperação'),
+          'Uma vez confirmada, você só podera doar novamente após o perídodo de recuperação'),
       actions: <Widget>[
         TextButton(
           onPressed: () => Navigator.pop(context),
