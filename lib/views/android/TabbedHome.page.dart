@@ -209,7 +209,8 @@ class _TabbedHomeState extends State<TabbedHome>
                   ),
                   SizedBox(width: 32),
                   TextButton(
-                    onPressed: null, // Next page address
+                    onPressed: () => Navigator.of(context)
+                        .pushNamed('/createCampanha'), // Next page address
                     style: TextButton.styleFrom(
                       foregroundColor: Colors.black,
                       backgroundColor: Colors.redAccent,
