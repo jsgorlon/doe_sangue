@@ -1,5 +1,6 @@
-// ignore_for_file: use_key_in_widget_constructors, must_be_immutable
+// ignore_for_file: use_key_in_widget_constructors, must_be_immutable, prefer_const_constructors
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:doe_sangue/controller/usuario.controller.dart';
 import 'package:doe_sangue/models/usuario.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,9 @@ import 'package:flutter/material.dart';
 class ResumoCard extends StatelessWidget {
   final usuarioController = UsuarioController();
   late TabController tabController;
+
+  var myGroupTitle = AutoSizeGroup();
+  var myGroupInfo = AutoSizeGroup();
 
   ResumoCard(this.tabController);
 
@@ -33,13 +37,14 @@ class ResumoCard extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 30,
                   color: Colors.redAccent,
+                  fontWeight: FontWeight.bold,
                   ),
                 ),
               ],
             ),
 
             SizedBox(
-              width: MediaQuery.of(context).size.width - 20,
+              width: MediaQuery.of(context).size.width - 30,
               child: Column(
                 children: [
                   Container(
@@ -48,59 +53,79 @@ class ResumoCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
 
-                        Column(
-                          children: const [
-                            Text('TOTAL DE DOAÇÕES', 
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.redAccent,
+                        Expanded(
+                          child: Column(
+                            children: [
+                              AutoSizeText('TOTAL DE DOAÇÕES',
+                              maxLines: 1,
+                              group: myGroupTitle, 
+                              style: TextStyle(
+                                fontSize: 22,
+                                color: Colors.redAccent,
+                                fontWeight: FontWeight.bold,
+                                ),
                               ),
-                            ),
-                            Text('5', 
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.white,
-                              ),
-                            )
-                          ],
+                              AutoSizeText('5',
+                              maxLines: 1,
+                              group: myGroupInfo, 
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w300,
+                                ),
+                              )
+                            ],
+                          ),
                         ),
 
-                        
-
-                        Column(
-                          children: const [
-                            Text('ÚLTIMA DOAÇÃO', 
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.redAccent,
+                        Expanded(
+                          child: Column(
+                            children: [
+                              AutoSizeText('ÚLTIMA DOAÇÃO',
+                              maxLines: 1,
+                              group: myGroupTitle, 
+                              style: TextStyle(
+                                fontSize: 22,
+                                color: Colors.redAccent,
+                                fontWeight: FontWeight.bold,
+                                ),
                               ),
-                            ),
-                            Text('22/08/2022', 
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.white,
+                              AutoSizeText('22/08/2022',
+                              maxLines: 1,
+                              group: myGroupInfo, 
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w300,
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-
                         
-
-                        Column(
-                          children: const [
-                            Text('PRÓXIMA DOAÇÃO', 
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.redAccent,
+                        Expanded(
+                          child: Column(
+                            children: [
+                              AutoSizeText('PRÓXIMA DOAÇÃO',
+                              maxLines: 1,
+                              group: myGroupTitle, 
+                              style: TextStyle(
+                                fontSize: 22,
+                                color: Colors.redAccent,
+                                fontWeight: FontWeight.bold,
+                                ),
                               ),
-                            ),
-                            Text('22/11/2022', 
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.white,
-                              ),
-                            )
-                          ],
+                              AutoSizeText('22/11/2022',
+                              maxLines: 1,
+                              group: myGroupInfo, 
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w300,
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       ],
                     ),
@@ -112,38 +137,54 @@ class ResumoCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
 
-                        Column(
-                          children: const [
-                            Text('CRIOU', 
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.redAccent,
+                        Expanded(
+                          child: Column(
+                            children: [
+                              AutoSizeText('CRIOU',
+                              maxLines: 1,
+                              group: myGroupTitle, 
+                              style: TextStyle(
+                                fontSize: 22,
+                                color: Colors.redAccent,
+                                fontWeight: FontWeight.bold,
+                                ),
                               ),
-                            ),
-                            Text('1 CAMPANHA', 
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.white,
-                              ),
-                            )
-                          ],
+                              AutoSizeText('1 CAMPANHA',
+                              maxLines: 1,
+                              group: myGroupInfo, 
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w300,
+                                ),
+                              )
+                            ],
+                          ),
                         ),
 
-                        Column(
-                          children: const [
-                            Text('PARTICIPOU DE', 
-                            style: TextStyle( 
-                              fontSize: 16,                         
-                              color: Colors.redAccent,
+                        Expanded(
+                          child: Column(
+                            children: [
+                              AutoSizeText('PARTICIPOU DE',
+                              maxLines: 1,
+                              group: myGroupTitle, 
+                              style: TextStyle( 
+                                fontSize: 22,                         
+                                color: Colors.redAccent,
+                                fontWeight: FontWeight.bold,
+                                ),
                               ),
-                            ),
-                            Text('3 CAMPANHAS', 
-                            style: TextStyle( 
-                              fontSize: 16,                         
-                              color: Colors.white,
-                              ),
-                            )
-                          ],
+                              AutoSizeText('3 CAMPANHAS',
+                              maxLines: 1,
+                              group: myGroupInfo, 
+                              style: TextStyle( 
+                                fontSize: 18,                         
+                                color: Colors.white,
+                                fontWeight: FontWeight.w300,
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       ],
                     ),
@@ -209,14 +250,14 @@ class ResumoCard extends StatelessWidget {
             )
           ],
         ),
-      );       
+      );
   }
-    AlertDialog _donationConfirmation(BuildContext context) {
-    return AlertDialog(
-      title: const Text('Confirmar doação?',
-        style: TextStyle(
-          color: Colors.white,
-          fontWeight: FontWeight.bold,
+  AlertDialog _donationConfirmation(BuildContext context) {
+  return AlertDialog(
+    title: const Text('Confirmar doação?',
+      style: TextStyle(
+        color: Colors.white,
+        fontWeight: FontWeight.bold,
         ),
       ),
       content: const Text(
@@ -225,7 +266,7 @@ class ResumoCard extends StatelessWidget {
       actions: <Widget>[
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Cancel'),
+          child: const Text('Cancelar'),
         ),
         TextButton(
           onPressed: () {

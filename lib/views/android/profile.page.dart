@@ -1,8 +1,13 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class ProfilePage extends StatelessWidget {
+
+
+  var myGroupTitle = AutoSizeGroup();
+  var myGroupInfo = AutoSizeGroup();
 
   @override
 
@@ -69,66 +74,88 @@ class ProfilePage extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: <Widget>[
-                            Column(
-                              children: <Widget>[
-                                Text("Doações",
-                                  style: TextStyle(
-                                    color: Colors.redAccent,
-                                    fontSize: 22.0,
-                                    fontWeight: FontWeight.bold,
+
+                            Expanded(
+                              child: Column(
+                                children: <Widget>[
+                                  AutoSizeText("Doações",
+                                  maxLines: 1,
+                                  group: myGroupTitle,
+                                    style: TextStyle(
+                                      color: Colors.redAccent,
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
-                                ),
-                                SizedBox(
-                                  height: 5.0,
-                                ),
-                                Text("5",
-                                  style: TextStyle(
-                                    fontSize: 20.0,
-                                    color: Colors.pinkAccent,
+                                  SizedBox(
+                                    height: 5.0,
                                   ),
-                                )
-                              ],
+                                  AutoSizeText("5",
+                                  maxLines: 1,
+                                  group: myGroupInfo,
+                                    style: TextStyle(
+                                      fontSize: 20.0,
+                                      color: Colors.pinkAccent,
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
-                            Column(
-                              children: <Widget>[
-                                Text("Tipo Sanguíneo",
-                                  style: TextStyle(
-                                    color: Colors.redAccent,
-                                    fontSize: 22.0,
-                                    fontWeight: FontWeight.bold,
+
+                            Expanded(
+                              child: Column(
+                                children: <Widget>[
+                                  AutoSizeText("Tipo Sanguíneo",
+                                  maxLines: 1,
+                                  group: myGroupTitle,
+                                    style: TextStyle(
+                                      color: Colors.redAccent,
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
-                                ),
-                                SizedBox(
-                                  height: 5.0,
-                                ),
-                                Text("O+",
-                                  style: TextStyle(
-                                    fontSize: 20.0,
-                                    color: Colors.pinkAccent,
+                                  SizedBox(
+                                    height: 5.0,
                                   ),
-                                )
-                              ],
+                                  AutoSizeText("O+",
+                                  maxLines: 1,
+                                  group: myGroupInfo,
+                                    style: TextStyle(
+                                      fontSize: 20.0,
+                                      color: Colors.pinkAccent,
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
-                            Column(
-                              children: <Widget>[
-                                Text("Nascimento",
-                                  style: TextStyle(
-                                    color: Colors.redAccent,
-                                    fontSize: 22.0,
-                                    fontWeight: FontWeight.bold,
+
+                            Expanded(
+                              child: Column(
+                                children: <Widget>[
+                                  AutoSizeText("Nascimento",
+                                  maxLines: 1,
+                                  group: myGroupTitle,
+                                    style: TextStyle(
+                                      color: Colors.redAccent,
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
-                                ),
-                                SizedBox(
-                                  height: 5.0,
-                                ),
-                                Text("14/11/1996",
-                                  style: TextStyle(
-                                    fontSize: 20.0,
-                                    color: Colors.pinkAccent,
+                                  SizedBox(
+                                    height: 5.0,
                                   ),
-                                )
-                              ],
+                                  AutoSizeText("14/11/1996",
+                                  maxLines: 1,
+                                  group: myGroupInfo,
+                                    style: TextStyle(
+                                      fontSize: 20.0,
+                                      color: Colors.pinkAccent,
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
+
                           ],
                         ),
                       ),

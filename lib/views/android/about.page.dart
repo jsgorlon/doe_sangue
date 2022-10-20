@@ -36,6 +36,7 @@ class AboutPage extends StatelessWidget {
                       title: Text('O que é a doação de sangue?', 
                         style: TextStyle(                          
                           fontSize: 18,
+                          fontWeight: FontWeight.bold,
                         ),                        
                       ),
                       textColor: Colors.redAccent,                      
@@ -47,7 +48,8 @@ class AboutPage extends StatelessWidget {
                         'O objetivo é manter os estoques de sangue sempre abastecidos e não apenas em datas específicas ou quando algum conhecido precisar. Agora que você entende a importância deste ato de solidariedade, faça a sua parte. Vá ao hemocentro mais próximo e doe sangue regularmente. Vidas dependem de você!\n', 
                         textAlign: TextAlign.justify,
                         style: TextStyle(
-                          fontSize: 16,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w300,
                         ),
                         )
                           ),
@@ -61,6 +63,7 @@ class AboutPage extends StatelessWidget {
                       title: Text('Como doar sangue?', 
                         style: TextStyle(                          
                           fontSize: 18,
+                          fontWeight: FontWeight.bold,
                         ),                        
                       ),
                       textColor: Colors.redAccent,
@@ -68,7 +71,8 @@ class AboutPage extends StatelessWidget {
                         ListTile(title: Text('Para doar sangue, basta procurar as unidades de coleta de sangue, como os Hemocentros, para checar se você atende aos requisitos necessários para a doação. Existem impedimentos temporários e também impedimentos definitivos. No mais, basta estar imbuído pelo desejo de ajudar o próximo.\n', 
                         textAlign: TextAlign.justify,
                         style: TextStyle(
-                          fontSize: 16,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w300,
                         ),
                         )
                           ),
@@ -82,6 +86,7 @@ class AboutPage extends StatelessWidget {
                       title: Text('Qual a quantidade de sangue doado?', 
                         style: TextStyle(                          
                           fontSize: 18,
+                          fontWeight: FontWeight.bold,
                         ),                        
                       ),
                       textColor: Colors.redAccent,
@@ -89,7 +94,8 @@ class AboutPage extends StatelessWidget {
                         ListTile(title: Text('Uma pessoa adulta tem, em média, 5 litros de sangue. Em cada doação, o máximo de sangue retirado é de 450 ml.\n', 
                         textAlign: TextAlign.justify,
                         style: TextStyle(
-                          fontSize: 16,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w300,
                         ),
                         )
                           ),
@@ -103,6 +109,7 @@ class AboutPage extends StatelessWidget {
                       title: Text('Quanto tempo devo esperar entre uma doação e outra?', 
                         style: TextStyle(                          
                           fontSize: 18,
+                          fontWeight: FontWeight.bold,
                         ),                        
                       ),
                       textColor: Colors.redAccent,
@@ -111,7 +118,8 @@ class AboutPage extends StatelessWidget {
                         'Já para as mulheres, o intervalo entre as doações é de 3 meses, podendo realizar, no máximo, 3 doações anuais.\n', 
                         textAlign: TextAlign.justify,
                         style: TextStyle(
-                          fontSize: 16,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w300,
                         ),
                         )
                           ),
@@ -125,6 +133,7 @@ class AboutPage extends StatelessWidget {
                       title: Text('Quais são os requisitos para doação de sangue?', 
                         style: TextStyle(                          
                           fontSize: 18,
+                          fontWeight: FontWeight.bold,
                         ),                        
                       ),
                       textColor: Colors.redAccent,
@@ -132,7 +141,8 @@ class AboutPage extends StatelessWidget {
                         ListTile(title: Text('Podem doar sangue pessoas entre 16 e 69 anos e que estejam pesando mais de 50kg. Além disso, é preciso apresentar documento oficial com foto e menores de 18 anos só podem doar com consentimento formal dos responsáveis. Pessoas com febre, gripe ou resfriado, diarreia recente, grávidas e mulheres no pós-parto não podem doar temporariamente.\n', 
                         textAlign: TextAlign.justify,
                         style: TextStyle(
-                          fontSize: 16,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w300,
                         ),
                         )
                           ),
@@ -146,17 +156,19 @@ class AboutPage extends StatelessWidget {
                       title: Text('Quais são os impedimentos definitivos para doar sangue?', 
                         style: TextStyle(                          
                           fontSize: 18,
+                          fontWeight: FontWeight.bold,
                         ),                        
                       ),
                       textColor: Colors.redAccent,
                       children: [
-                        ListTile(title: Text('Ter passado por um quadro de hepatite após os 11 anos de idade;\n\n'
-                          'Evidência clínica ou laboratorial das seguintes doenças transmissíveis pelo sangue: Hepatites B e C, AIDS (vírus HIV), doenças associadas ao vírus HTLV I e II e Doenças de Chagas;\n\n' 
-                          'Uso de drogas ilícitas injetáveis;\n\n'
-                          'Malária.\n', 
+                        ListTile(title: Text('- Ter passado por um quadro de hepatite após os 11 anos de idade;\n\n'
+                          '- Evidência clínica ou laboratorial das seguintes doenças transmissíveis pelo sangue: Hepatites B e C, AIDS (vírus HIV), doenças associadas ao vírus HTLV I e II e Doenças de Chagas;\n\n' 
+                          '- Uso de drogas ilícitas injetáveis;\n\n'
+                          '- Malária.\n', 
                         textAlign: TextAlign.justify,
                         style: TextStyle(
-                          fontSize: 16,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w300,
                         ),
                         )
                           ),
