@@ -33,13 +33,12 @@ class SignupPage extends StatelessWidget {
         child: ListView(
           children: <Widget>[
             TextFormField(
-              autofocus: true,
               keyboardType: TextInputType.text,
               decoration: const InputDecoration(
                 labelText: "Nome",
                 labelStyle: TextStyle(
-                  color: Colors.redAccent,
-                  fontWeight: FontWeight.w400,
+                  color: Colors.white,
+                  decorationColor: Colors.redAccent,
                   fontSize: 16,
                 ),
               ),
@@ -51,13 +50,11 @@ class SignupPage extends StatelessWidget {
               height: 10,
             ),
             TextFormField(
-              autofocus: true,
               keyboardType: TextInputType.text,
               decoration: const InputDecoration(
                 labelText: "Gênero",
                 labelStyle: TextStyle(
-                  color: Colors.redAccent,
-                  fontWeight: FontWeight.w400,
+                  color: Colors.white,
                   fontSize: 16,
                 ),
               ),
@@ -69,13 +66,11 @@ class SignupPage extends StatelessWidget {
               height: 10,
             ),
             TextFormField(
-              autofocus: true,
               keyboardType: TextInputType.emailAddress,
               decoration: const InputDecoration(
                 labelText: "E-mail",
                 labelStyle: TextStyle(
-                  color: Colors.redAccent,
-                  fontWeight: FontWeight.w400,
+                  color: Colors.white,
                   fontSize: 16,
                 ),
               ),
@@ -88,13 +83,11 @@ class SignupPage extends StatelessWidget {
             ),
             TextFormField(
               inputFormatters: [maskFormatterPhone],
-              autofocus: true,
               keyboardType: TextInputType.phone,
               decoration: const InputDecoration(
                 labelText: "Telefone",
                 labelStyle: TextStyle(
-                  color: Colors.redAccent,
-                  fontWeight: FontWeight.w400,
+                  color: Colors.white,
                   fontSize: 16,
                 ),
               ),
@@ -106,13 +99,11 @@ class SignupPage extends StatelessWidget {
               height: 10,
             ),
             TextFormField(
-              autofocus: true,
               keyboardType: TextInputType.text,
               decoration: const InputDecoration(
                 labelText: "Tipo sanguíneo",
                 labelStyle: TextStyle(
-                  color: Colors.redAccent,
-                  fontWeight: FontWeight.w400,
+                  color: Colors.white,
                   fontSize: 16,
                 ),
               ),
@@ -125,13 +116,11 @@ class SignupPage extends StatelessWidget {
             ),
             TextFormField(
               inputFormatters: [maskFormatterDate],
-              autofocus: true,
               keyboardType: TextInputType.datetime,
               decoration: const InputDecoration(
                 labelText: "Data da última doação",
                 labelStyle: TextStyle(
-                  color: Colors.redAccent,
-                  fontWeight: FontWeight.w400,
+                  color: Colors.white,
                   fontSize: 16,
                 ),
               ),
@@ -143,21 +132,19 @@ class SignupPage extends StatelessWidget {
               height: 10,
             ),
             TextFormField(
-              autofocus: true,
               keyboardType: TextInputType.text,
               obscureText: true,
               decoration: const InputDecoration(
                 labelText: "Senha",
                 labelStyle: TextStyle(
-                  color: Colors.redAccent,
-                  fontWeight: FontWeight.w400,
+                  color: Colors.white,
                   fontSize: 16,
                 ),
               ),
               style: const TextStyle(fontSize: 16),
             ),
             const SizedBox(
-              height: 10,
+              height: 40,
             ),
             Container(
               height: 60,
@@ -186,15 +173,20 @@ class SignupPage extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            Container(
-              height: 40,
-              alignment: Alignment.center,
-              child: TextButton(
-                child: const Text(
-                  "Cancelar",
-                  textAlign: TextAlign.center,
-                ),
-                onPressed: () => Navigator.pop(context),
+            SizedBox (
+              height: 40,              
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text('Já possui uma conta?'),
+                  TextButton(
+                    child: const Text(
+                      "Faça o login",
+                      textAlign: TextAlign.center,
+                    ),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                ],
               ),
             ),
           ],

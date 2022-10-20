@@ -28,6 +28,7 @@ class ResetPasswordPage extends StatelessWidget {
                     Text(
                       "Esqueceu sua senha?",
                       style: TextStyle(
+                        color: Colors.redAccent,
                         fontSize: 32,
                         fontWeight: FontWeight.w500,
                       ),
@@ -38,8 +39,8 @@ class ResetPasswordPage extends StatelessWidget {
                     Text(
                       "Por favor, informe o E-mail associado a sua conta que enviaremos um link com as instruções para a recuperação da sua senha.",
                       style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w400,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w300,
                       ),
                       textAlign: TextAlign.center,
                     )
@@ -54,7 +55,7 @@ class ResetPasswordPage extends StatelessWidget {
                         decoration: const InputDecoration(
                           labelText: "E-mail",
                           labelStyle: TextStyle(
-                            color: Colors.redAccent,
+                            color: Colors.white,
                             fontWeight: FontWeight.w400,
                             fontSize: 20,
                           ),

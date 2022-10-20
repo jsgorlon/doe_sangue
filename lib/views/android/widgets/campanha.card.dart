@@ -25,7 +25,7 @@ class CampanhaCard extends StatelessWidget {
               child: ExpansionTile(
                 title: Text('Organizador: ${campanha.organizador!.nome!}'),
                 subtitle: _cardSubtitle(campanha),
-                backgroundColor: Color.fromARGB(171, 185, 47, 47),
+                textColor: Colors.redAccent,
                 children: [
                   _cardDetails(context, campanha),
                 ],

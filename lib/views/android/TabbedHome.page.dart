@@ -4,6 +4,7 @@
 import 'package:maps_launcher/maps_launcher.dart';
 import 'package:doe_sangue/views/android/widgets/campanha.card.dart';
 import 'package:doe_sangue/views/android/widgets/resumo.card.dart';
+import 'package:doe_sangue/views/android/widgets/notificacao.card.dart';
 import 'package:flutter/material.dart';
 
 import '../../models/usuario.dart';
@@ -110,7 +111,7 @@ class _TabbedHomeState extends State<TabbedHome>
           CampanhaCard(_tabController),
 
           //TELA 3 Notificações
-          Text('Tela3'),
+          NotificacaoCard(_tabController),
         ],
       ),
       drawer: Drawer(
@@ -123,16 +124,16 @@ class _TabbedHomeState extends State<TabbedHome>
               ),
               currentAccountPicture: CircleAvatar(
                 backgroundImage: NetworkImage(
-                  'https://thumbs.dreamstime.com/b/account-female-icon-128919363.jpg',
+                  "https://www.rd.com/wp-content/uploads/2017/09/01-shutterstock_476340928-Irina-Bg.jpg",
                 ),
               ),
               accountName: Text('Julia Silva'), //user data
-              accountEmail: Text('Email@email.com'), //user data
+              accountEmail: Text('email@email.com'), //user data
             ),
             ListTile(
               title: Text('Minha conta'),
               onTap: () {
-                /// Next page address
+                Navigator.of(context).pushNamed('/profile');
               },
             ),
 

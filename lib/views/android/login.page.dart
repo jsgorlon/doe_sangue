@@ -15,13 +15,11 @@ class LoginPage extends StatelessWidget {
               height: 20,
             ),
             TextFormField(
-              autofocus: true,
               keyboardType: TextInputType.emailAddress,
               decoration: const InputDecoration(
                 labelText: "E-mail",
                 labelStyle: TextStyle(
-                  color: Colors.redAccent,
-                  fontWeight: FontWeight.w400,
+                  color: Colors.white,
                   fontSize: 16,
                 ),
               ),
@@ -31,14 +29,13 @@ class LoginPage extends StatelessWidget {
               height: 10,
             ),
             TextFormField(
-              autofocus: true,
               keyboardType: TextInputType.text,
               obscureText: true,
+              autocorrect: false,
               decoration: const InputDecoration(
                 labelText: "Senha",
                 labelStyle: TextStyle(
-                  color: Colors.redAccent,
-                  fontWeight: FontWeight.w400,
+                  color: Colors.white,
                   fontSize: 16,
                 ),
               ),
@@ -49,7 +46,7 @@ class LoginPage extends StatelessWidget {
               alignment: Alignment.centerRight,
               child: TextButton(
                 child: const Text(
-                  "Recuperar Senha",
+                  "Esqueceu sua senha?",
                   textAlign: TextAlign.right,
                 ),
                 onPressed: () {
@@ -98,23 +95,29 @@ class LoginPage extends StatelessWidget {
             
             const SizedBox(
               height: 10,
-
             ),
+
             SizedBox(
               height: 40,
-              child: TextButton(
-                child: const Text(
-                  "Cadastre-se",
-                  textAlign: TextAlign.center,
-                ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => SignupPage(),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text("Não possui uma conta?"),
+                  TextButton(
+                    child: const Text(
+                      "Cadastre-se",
+                      textAlign: TextAlign.center,
                     ),
-                  );
-                },
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SignupPage(),
+                        ),
+                      );
+                    },
+                  ),
+                ],
               ),
             ),
           ],

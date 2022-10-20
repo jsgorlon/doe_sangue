@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:doe_sangue/views/android/login.page.dart';
+import 'package:doe_sangue/views/android/profile.page.dart';
 import 'package:doe_sangue/views/android/createCampanha.page.dart';
 import 'package:flutter/material.dart';
 import 'package:doe_sangue/views/android/TabbedHome.page.dart';
@@ -18,6 +19,7 @@ class AndroidApp extends StatelessWidget {
       routes: {
         '/about':(context) => AboutPage(),
         '/createCampanha': (context) => CreateCampanha(),
+        '/profile':(context) => ProfilePage(),
       },
     );
   }
