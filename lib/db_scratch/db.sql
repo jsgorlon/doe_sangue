@@ -25,7 +25,7 @@ CREATE TABLE doacoes (
     CONSTRAINT  pkdoacoes_id                PRIMARY KEY(id),
     CONSTRAINT  fkdoacoes_idUsuario         FOREIGN KEY(idUsuario) REFERENCES usuarios(id),
     CONSTRAINT  fkdoacoes_idCampanha        FOREIGN KEY(idCampanha) REFERENCES campanhas(id),
-    CONSTRAINT  fkdoacoes_idLocal           FOREIGN KEY(idLocal) REFERENCES pontos_coleta(id),
+    CONSTRAINT  fkdoacoes_idLocal           FOREIGN KEY(idLocal) REFERENCES locais_coleta(id),
     CONSTRAINT  ukdoacoes_usuario_campanha  UNIQUE(idUsuario, idCampanha)
 )
 GO
@@ -36,11 +36,12 @@ CREATE TABLE campanhas (
     INT         idLocal             NOT NULL,
     VARCHAR(3)  tipoSanguineo       NOT NULL,
     INT         qtdSolicitada       NOT NULL,
+    INT         qtdDoada            NOT NULL DEFAULT 0,
     DATETIME    dataInicio          NOT NULL DEFAULT GETDATE(),
-    BIT         ativo               NOT NULL DEFAULT 1,
+    BIT         ativa               NOT NULL DEFAULT 1,
     CONSTRAINT  pkcampanhas_id          PRIMARY KEY(id),
     CONSTRAINT  fkcampanhas_idUsuario   FOREIGN KEY(idUsuario) REFERENCES usuarios(id),
-    CONSTRAINT  fkcampanhas_idLocal     FOREIGN KEY(idLocal) REFERENCES pontos_coleta(id),
+    CONSTRAINT  fkcampanhas_idLocal     FOREIGN KEY(idLocal) REFERENCES locais_coleta(id),
     CONSTRAINT  ckqtdSolicitada         CHECK (qtdSolicitada > 0)
 )
 GO
@@ -65,7 +66,7 @@ CREATE TABLE cidades
   CONSTRAINT fkcidades_idEstado     FOREIGN KEY(idEstado) REFERENCES estados(id)
 );
 GO
-CREATE TABLE pontos_coleta (
+CREATE TABLE locais_coleta (
     INT             id          IDENTITY,
     INT             idCidade    NOT NULL,
     VARCHAR(100)    logradouro  NOT NULL,
