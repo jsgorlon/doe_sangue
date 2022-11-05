@@ -1,26 +1,39 @@
 import 'package:doe_sangue/models/campanha.dart';
+import 'package:doe_sangue/models/localColeta.dart';
 import 'package:doe_sangue/models/usuario.dart';
 
 class CampanhaController {
   final campanhas = [
     Campanha(
-      Usuario('Julia', 'julia@gmail.com', '2345455456', 'AB+'),
-      'A+',
-      10,
-      'Hospital ABC',
-      'Campinas',
-      'SP',
-      DateTime(2022, 6, 6),
-      receptor: "Tales",
+      organizador: Usuario(
+          nome: 'Julia',
+          email: 'julia@gmail.com',
+          telefone: '2345455456',
+          tipoSanguineo: 'AB+'),
+      tipoSanguineo: 'A+',
+      qtdSolicitada: 10,
+      local: LocalColeta(
+        nomeLocal: 'Hospital ABC',
+        nomeCidade: 'Campinas',
+        siglaUF: 'SP',
+      ),
+      dataInicio: DateTime(2022, 6, 6),
+      nomeReceptor: "Tales",
     ),
     Campanha(
-      Usuario('Joao', 'julia@gmail.com', '2345455456', 'A-'),
-      'AB+',
-      10,
-      'Hospital ABC',
-      'Campinas',
-      'SP',
-      DateTime(2022, 6, 6),
+      organizador: Usuario(
+          nome: 'Joao',
+          email: 'julia@gmail.com',
+          telefone: '2345455456',
+          tipoSanguineo: 'A-'),
+      tipoSanguineo: 'AB+',
+      qtdSolicitada: 10,
+      local: LocalColeta(
+        nomeLocal: 'Hospital ABC',
+        nomeCidade: 'Campinas',
+        siglaUF: 'SP',
+      ),
+      dataInicio: DateTime(2022, 6, 6),
     )
   ];
 

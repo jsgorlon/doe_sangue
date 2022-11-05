@@ -4,7 +4,6 @@ import 'package:doe_sangue/views/android/login.page.dart';
 import 'package:doe_sangue/views/android/profile.page.dart';
 import 'package:doe_sangue/views/android/createCampanha.page.dart';
 import 'package:flutter/material.dart';
-import 'package:doe_sangue/views/android/TabbedHome.page.dart';
 import 'about.page.dart';
 
 class AndroidApp extends StatelessWidget {
@@ -17,9 +16,9 @@ class AndroidApp extends StatelessWidget {
       theme: ThemeData.dark(),
       home: LoginPage(),
       routes: {
-        '/about':(context) => AboutPage(),
+        '/about': (context) => AboutPage(),
         '/createCampanha': (context) => CreateCampanha(),
-        '/profile':(context) => ProfilePage(),
+        '/profile': (context) => ProfilePage(),
       },
     );
   }

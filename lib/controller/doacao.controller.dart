@@ -1,10 +1,22 @@
 import 'package:doe_sangue/models/doacao.dart';
+import 'package:doe_sangue/models/localColeta.dart';
 import 'package:doe_sangue/models/usuario.dart';
 
 class DoacaoController {
   final doacoes = [
-    Doacao(Usuario('Carla', 'carla@hotmail.com', '12634576', 'O'),
-        'São José do Rio Preto', DateTime(2022, 10, 31)),
+    Doacao(
+      doador: Usuario(
+          nome: 'Carla',
+          email: 'carla@hotmail.com',
+          telefone: '12634576',
+          tipoSanguineo: 'O'),
+      local: LocalColeta(
+        nomeLocal: 'HB',
+        nomeCidade: 'São José do Rio Preto',
+        siglaUF: 'SP',
+      ),
+      dataDoacao: DateTime(2022, 10, 31),
+    ),
   ];
 
   List<Doacao> read() {

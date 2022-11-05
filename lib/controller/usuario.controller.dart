@@ -2,7 +2,11 @@ import 'package:doe_sangue/models/usuario.dart';
 
 class UsuarioController {
   final usuarios = [
-    Usuario('João', 'joao@gmail.com', '1779939596', "AB"),
+    Usuario(
+        nome: 'João',
+        email: 'joao@gmail.com',
+        telefone: '1779939596',
+        tipoSanguineo: "AB"),
   ];
 
   List<Usuario> read() {

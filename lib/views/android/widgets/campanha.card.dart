@@ -41,8 +41,9 @@ class CampanhaCard extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text('Receptor: ${campanha.receptor ?? campanha.organizador!.nome!}'),
-        Text('Cidade : ${campanha.cidade}/ ${campanha.estado}')
+        Text(
+            'Receptor: ${campanha.nomeReceptor ?? campanha.organizador!.nome!}'),
+        Text('Cidade : ${campanha.local}/ ${campanha.local}')
       ],
     );
   }
@@ -58,8 +59,7 @@ class CampanhaCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text('Local: ${campanha.local}'),
-              Text(
-                  'Doações: ${campanha.qtdBolsasDoadas}/${campanha.qtdBolsasSolicitadas}'),
+              Text('Doações: ${campanha.qtdDoada}/${campanha.qtdSolicitada}'),
             ],
           ),
           Row(
