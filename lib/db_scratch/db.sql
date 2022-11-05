@@ -39,7 +39,7 @@ CREATE TABLE campanhas (
     INT         qtdDoada            NOT NULL DEFAULT 0,
     DATETIME    dataInicio          NOT NULL DEFAULT GETDATE(),
     BIT         ativa               NOT NULL DEFAULT 1,
-    CONSTRAINT  pkcampanhas_id          PRIMARY KEY(id),
+    CONSTRAINT  pkcampanhas_id          PRIMARY KEY(idCampanha),
     CONSTRAINT  fkcampanhas_idUsuario   FOREIGN KEY(idUsuario) REFERENCES usuarios(idUsuario),
     CONSTRAINT  fkcampanhas_idLocal     FOREIGN KEY(idLocal) REFERENCES locais_coleta(idLocal),
     CONSTRAINT  ckqtdSolicitada         CHECK (qtdSolicitada > 0)
