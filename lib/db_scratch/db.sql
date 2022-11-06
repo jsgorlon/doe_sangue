@@ -1,80 +1,70 @@
-CREATE DATABASE DoeSangue;
-
-USE DoeSangue;
-
 CREATE TABLE usuarios (
-    INT             idUsuario           IDENTITY,
-    VARCHAR(80)     nome                NOT NULL,
-    VARCHAR(320)    email               NOT NULL,
-    VARCHAR(18)     telefone            NOT NULL,
-    VARCHAR(3)      tipoSanguineo       NOT NULL,
-    DATETIME        dataCadastro        NOT NULL DEFAULT GETDATE(),
-    TEXT            senha               NOT NULL,
-    BIT             ativo               NOT NULL DEFAULT 1,
-    CONSTRAINT      pkusuarios_id       PRIMARY KEY(idUsuario),
-    CONSTRAINT      ukusuarios_telefone UNIQUE(telefone),
-    CONSTRAINT      ukusuarios_email    UNIQUE(email),
-)
-GO
-CREATE TABLE doacoes (
-    INT         idDoacao                    IDENTITY,
-    INT         idUsuario                   NOT NULL,
-    INT         idCampanha                      NULL,
-    INT         idLocal                     NOT NULL,
-    DATETIME    dataDoacao                  NOT NULL DEFAULT GETDATE(),
-    CONSTRAINT  pkdoacoes_id                PRIMARY KEY(idDoacao),
-    CONSTRAINT  fkdoacoes_idUsuario         FOREIGN KEY(idUsuario) REFERENCES usuarios(idUsuario),
-    CONSTRAINT  fkdoacoes_idCampanha        FOREIGN KEY(idCampanha) REFERENCES campanhas(idCampanha),
-    CONSTRAINT  fkdoacoes_idLocal           FOREIGN KEY(idLocal) REFERENCES locais_coleta(idLocal),
-    CONSTRAINT  ukdoacoes_usuario_campanha  UNIQUE(idUsuario, idCampanha)
-)
-GO
-CREATE TABLE campanhas (
-    INT         idCampanha          IDENTITY,
-    INT         idUsuario           NOT NULL,
-    VARCHAR(80) nomeReceptor            NULL,
-    INT         idLocal             NOT NULL,
-    VARCHAR(3)  tipoSanguineo       NOT NULL,
-    INT         qtdSolicitada       NOT NULL,
-    INT         qtdDoada            NOT NULL DEFAULT 0,
-    DATETIME    dataInicio          NOT NULL DEFAULT GETDATE(),
-    BIT         ativa               NOT NULL DEFAULT 1,
-    CONSTRAINT  pkcampanhas_id          PRIMARY KEY(idCampanha),
-    CONSTRAINT  fkcampanhas_idUsuario   FOREIGN KEY(idUsuario) REFERENCES usuarios(idUsuario),
-    CONSTRAINT  fkcampanhas_idLocal     FOREIGN KEY(idLocal) REFERENCES locais_coleta(idLocal),
-    CONSTRAINT  ckqtdSolicitada         CHECK (qtdSolicitada > 0)
-)
-GO
-CREATE TABLE estados 
-(
-  idEstado        INT         NOT NULL,
-  nomeEstado      VARCHAR(75) NOT NULL,
-  siglaUF   VARCHAR(2)  NOT NULL,
-  
-  CONSTRAINT pkestados_id           PRIMARY KEY(idEstado), 
-  CONSTRAINT ukestados_siglaUF_nome UNIQUE(siglaUF, nome) 
-)
-
-CREATE TABLE cidades 
-(
-  idCidade    INT             IDENTITY,
-  nomeCidade  VARCHAR(120)    NOT NULL, 
-  idEstado    INT             NOT NULL,
-  ibge        INT             NOT NULL, 
-  CONSTRAINT pkcidades_id           PRIMARY KEY(idCidade),
-  CONSTRAINT ukcidades_ibge_estado  UNIQUE(ibge, idEstado),
-  CONSTRAINT fkcidades_idEstado     FOREIGN KEY(idEstado) REFERENCES estados(idEstado)
+    idUsuario       INTEGER   PRIMARY KEY AUTOINCREMENT,
+    nomeUsuario     TEXT      NOT NULL,
+    email           TEXT      NOT NULL  UNIQUE,
+    telefone        TEXT      NOT NULL  UNIQUE,
+    tipoSanguineo   TEXT      NOT NULL,
+    dataNascimento  DATETIME  NOT NULL,
+    dataCadastro    DATETIME  NOT NULL DEFAULT current_timestamp,
+    senha           TEXT      NOT NULL,
+    ativo           BIT       NOT NULL DEFAULT 1
 );
-GO
+CREATE TABLE doacoes (
+    idDoacao    INTEGER  PRIMARY KEY AUTOINCREMENT,
+    idUsuario   INTEGER  NOT NULL,
+    idCampanha  INTEGER      NULL,
+    idLocal     INTEGER  NOT NULL,
+    dataDoacao  DATETIME NOT NULL DEFAULT current_timestamp,
+    FOREIGN KEY(idUsuario)  REFERENCES usuarios(idUsuario),
+    FOREIGN KEY(idCampanha) REFERENCES campanhas(idCampanha),
+    FOREIGN KEY(idLocal)    REFERENCES locais_coleta(idLocal),
+    UNIQUE(idUsuario, idCampanha)
+);
+CREATE TABLE campanhas (
+    idCampanha    INTEGER   PRIMARY KEY AUTOINCREMENT,
+    idUsuario     INTEGER   NOT NULL,
+    nomeReceptor  TEXT          NULL,
+    idLocal       INTEGER   NOT NULL,
+    tipoSanguineo TEXT      NOT NULL,
+    qtdSolicitada INTEGER   NOT NULL,
+    dataInicio    DATETIME  NOT NULL DEFAULT current_timestamp,
+    ativa         BIT       NOT NULL DEFAULT 1,
+    FOREIGN KEY(idUsuario) REFERENCES usuarios(idUsuario),
+    FOREIGN KEY(idLocal) REFERENCES locais_coleta(idLocal),
+    CHECK (qtdSolicitada > 0)
+);
+CREATE TABLE estados (
+  idEstado    INTEGER   PRIMARY KEY AUTOINCREMENT,
+  nomeEstado  TEXT      NOT NULL,
+  siglaUF     TEXT      NOT NULL,
+  UNIQUE(siglaUF, nomeEstado) 
+);
+CREATE TABLE cidades (
+  idCidade    INTEGER PRIMARY KEY AUTOINCREMENT,
+  nomeCidade  TEXT    NOT NULL, 
+  idEstado    INTEGER NOT NULL,
+  ibge        INTEGER NOT NULL, 
+  UNIQUE(ibge, idEstado),
+  FOREIGN KEY(idEstado) REFERENCES estados(idEstado)
+);
 CREATE TABLE locais_coleta (
-    INT             idLocal     IDENTITY,
-    INT             idCidade    NOT NULL,
-    VARCHAR(120)    nomeLocal   NOT NULL,
-    VARCHAR(100)    logradouro  NOT NULL,
-    VARCHAR(80)     bairro      NOT NULL,
-    VARCHAR(10)     cep         NOT NULL,
-    INT             numero      NOT NULL,
-    varchar(100)    complemento     NULL,
-    CONSTRAINT      pklocais_id PRIMARY KEY(idLocal),
-    CONSTRAINT      fklocais_idCidade  FOREIGN KEY(idCidade) REFERENCES cidades(idCidade)
-)
+    idLocal     INTEGER PRIMARY KEY AUTOINCREMENT,
+    idCidade    INTEGER NOT NULL,
+    nomeLocal   TEXT    NOT NULL,
+    logradouro  TEXT    NOT NULL,
+    numero      TEXT    NOT NULL,
+    bairro      TEXT    NOT NULL,
+    cep         TEXT    NOT NULL,
+    complemento TEXT        NULL,
+    FOREIGN KEY(idCidade) REFERENCES cidades(idCidade)
+);
+
+INSERT INTO usuarios(nomeUsuario, email, telefone, tiposanguineo, dataNascimento, senha) VALUES ("João", "joao@gmail.com", "179395765", "AB+", "1992-10-20", "senha123"), ("Maria", "maria@fatec.sp.gov.br", "159965564", "A-", "1995-05-05", "senha123"), ("Julia", "julia@gmail.com", "228970346", "O-", "2009-10-20", "senha123");
+INSERT INTO estados(nomeEstado, siglaUF) VALUES ("São Paulo", "SP"), ("Minas Gerais", "MG");
+INSERT INTO cidades(nomeCidade, idEstado, ibge) VALUES ("São José do Rio Preto", 1, 3549805), ("Patos de Minas", 2, 3148004);
+INSERT INTO campanhas(idUsuario, nomeReceptor, idLocal, tipoSanguineo, qtdSolicitada, dataInicio, ativa) VALUES (2, "Carla", 2, "A+", 5, "2022-01-05", 0);
+INSERT INTO campanhas(idUsuario, idLocal, tipoSanguineo, qtdSolicitada) VALUES (1, 1, "AB+", 5);
+INSERT INTO campanhas(idUsuario, nomeReceptor, idLocal, tipoSanguineo, qtdSolicitada) VALUES (2, "Marcia", 2, "O-", 5);
+INSERT INTO locais_coleta(idCidade, nomeLocal, logradouro, numero, bairro, cep, complemento) VALUES (1, "Hemocentro Rio Preto", "Av. Jamil Feres Kfouri", "80", "Jardim Panorama", "15091-240", ""), (2, "Fundação Hemominas", "Rua Major Gote", "1255", "Centro", "38700-000", "Segundo Andar");
+INSERT INTO doacoes(idUsuario, idLocal, dataDoacao) VALUES (1, 1, "2022-10-29");
+INSERT INTO doacoes(idUsuario, idCampanha, idLocal, dataDoacao) VALUES (2, 1, 2, "2022-01-06");
