@@ -49,7 +49,7 @@ class _CampanhaCardState extends State<CampanhaCard> {
                         borderRadius: BorderRadius.circular(5)),
                     child: ExpansionTile(
                       title: Text(
-                          'Organizador: ${campanha.organizador!.nomeUsuario!}'),
+                          'Organizador: ${campanha.organizador!.nomeUsuario}'),
                       subtitle: _cardSubtitle(campanha),
                       textColor: Colors.redAccent,
                       children: [

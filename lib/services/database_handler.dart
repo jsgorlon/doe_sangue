@@ -24,6 +24,7 @@ class DatabaseHandler {
                 email           TEXT      NOT NULL  UNIQUE,
                 telefone        TEXT      NOT NULL  UNIQUE,
                 tipoSanguineo   TEXT      NOT NULL,
+                sexo            TEXT      NOT NULL,
                 dataNascimento  DATETIME  NOT NULL,
                 dataCadastro    DATETIME  NOT NULL DEFAULT current_timestamp,
                 senha           TEXT      NOT NULL,
@@ -62,7 +63,7 @@ class DatabaseHandler {
         await database.execute(
             "CREATE TABLE locais_coleta (idLocal INTEGER PRIMARY KEY AUTOINCREMENT, idCidade INTEGER NOT NULL, nomeLocal TEXT NOT NULL, logradouro TEXT NOT NULL, numero TEXT NOT NULL, bairro TEXT NOT NULL, cep TEXT NOT NULL, complemento TEXT NULL, FOREIGN KEY(idCidade) REFERENCES cidades(idCidade));");
         await database.execute(
-            """INSERT INTO usuarios(nomeUsuario, email, telefone, tiposanguineo, dataNascimento, senha) VALUES ("João", "joao@gmail.com", "179395765", "AB+", "1992-10-20", "senha123"), ("Maria", "maria@fatec.sp.gov.br", "159965564", "A-", "1995-05-05", "senha123"), ("Julia", "julia@gmail.com", "228970346", "O-", "2009-10-20", "senha123");""");
+            """INSERT INTO usuarios(nomeUsuario, email, telefone, tiposanguineo, sexo, dataNascimento, senha) VALUES ("João", "joao@gmail.com", "179395765", "AB+", "M", "1992-10-20", "senha123"), ("Maria", "maria@fatec.sp.gov.br", "159965564", "A-", "F", "1995-05-05", "senha123"), ("Julia", "julia@gmail.com", "228970346", "O-", "F", "2009-10-20", "senha123");""");
         await database.execute(
             """INSERT INTO estados(nomeEstado, siglaUF) VALUES ("São Paulo", "SP"), ("Minas Gerais", "MG");""");
         await database.execute(

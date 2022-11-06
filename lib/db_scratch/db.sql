@@ -4,6 +4,7 @@ CREATE TABLE usuarios (
     email           TEXT      NOT NULL  UNIQUE,
     telefone        TEXT      NOT NULL  UNIQUE,
     tipoSanguineo   TEXT      NOT NULL,
+    sexo            TEXT      NOT NULL,
     dataNascimento  DATETIME  NOT NULL,
     dataCadastro    DATETIME  NOT NULL DEFAULT current_timestamp,
     senha           TEXT      NOT NULL,

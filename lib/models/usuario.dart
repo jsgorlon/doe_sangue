@@ -1,6 +1,8 @@
 class Usuario {
   int? idUsuario;
   String? nomeUsuario;
+  String? sexo;
+  DateTime? dataNascimento;
   String? email;
   String? telefone;
   String? tipoSanguineo;
@@ -14,6 +16,8 @@ class Usuario {
   Usuario({
     this.idUsuario,
     this.nomeUsuario,
+    this.sexo,
+    this.dataNascimento,
     this.email,
     this.telefone,
     this.tipoSanguineo,
@@ -28,6 +32,8 @@ class Usuario {
   Usuario.fromMap(Map<dynamic, dynamic> map) {
     idUsuario = map['idUsuario'];
     nomeUsuario = map['nomeUsuario'];
+    sexo = map['sexo'];
+    dataNascimento = map['dataNascimento'];
     email = map['email'];
     telefone = map['telefone'];
     tipoSanguineo = map['tipoSanguineo'];
