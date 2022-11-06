@@ -4,7 +4,6 @@ import 'package:doe_sangue/models/usuario.dart';
 
 class Doacao {
   int? idDoacao;
-  //int? idLocal;
   Usuario? doador;
   Campanha? campanha;
   LocalColeta? local;
@@ -12,7 +11,6 @@ class Doacao {
 
   Doacao({
     this.idDoacao,
-    //this.idLocal,
     this.doador,
     this.campanha,
     this.local,

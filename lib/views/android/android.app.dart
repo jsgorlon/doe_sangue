@@ -2,7 +2,7 @@
 
 import 'package:doe_sangue/views/android/login.page.dart';
 import 'package:doe_sangue/views/android/profile.page.dart';
-import 'package:doe_sangue/views/android/createCampanha.page.dart';
+import 'package:doe_sangue/views/android/create_campanha.page.dart';
 import 'package:flutter/material.dart';
 import 'about.page.dart';
 

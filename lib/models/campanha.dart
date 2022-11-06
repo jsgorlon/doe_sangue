@@ -3,8 +3,6 @@ import 'package:doe_sangue/models/usuario.dart';
 
 class Campanha {
   int? idCampanha;
-  //int? idUsuario;
-  //int? idLocal;
   Usuario? organizador;
   String? nomeReceptor;
   String? tipoSanguineo;
@@ -16,8 +14,6 @@ class Campanha {
 
   Campanha({
     this.idCampanha,
-    //this.idUsuario,
-    //this.idLocal,
     this.organizador,
     this.nomeReceptor,
     this.tipoSanguineo,
@@ -30,15 +26,13 @@ class Campanha {
 
   Campanha.fromMap(Map<dynamic, dynamic> map) {
     idCampanha = map['idCampanha'];
-    //idUsuario = map['idUsuario'];
-    //idLocal = map['idLocal'];
-    organizador = Usuario.fromMap(map['organizador']);
-    nomeReceptor = map['nomeReceptor'];
+    organizador = Usuario.fromMap(map);
+    nomeReceptor = map['nomeReceptor'] ?? "";
     tipoSanguineo = map['tipoSanguineo'];
     qtdSolicitada = map['qtdSolicitada'];
-    qtdDoada = map['qtdDoada'];
-    local = LocalColeta.fromMap(map['local']);
-    dataInicio = map['dataInicio'];
+    qtdDoada = map['qtdDoada'] ?? 0;
+    local = LocalColeta.fromMap(map);
+    dataInicio = DateTime.tryParse(map['dataInicio']);
     ativa = map['ativa'] == 1 ? true : false;
   }
 

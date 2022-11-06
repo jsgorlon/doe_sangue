@@ -1,53 +1,29 @@
 import 'package:doe_sangue/models/campanha.dart';
-import 'package:doe_sangue/models/localColeta.dart';
-import 'package:doe_sangue/models/usuario.dart';
+import 'package:doe_sangue/services/database_handler.dart';
 
 class CampanhaController {
-  final campanhas = [
-    Campanha(
-      organizador: Usuario(
-          nome: 'Julia',
-          email: 'julia@gmail.com',
-          telefone: '2345455456',
-          tipoSanguineo: 'AB+'),
-      tipoSanguineo: 'A+',
-      qtdSolicitada: 10,
-      local: LocalColeta(
-        nomeLocal: 'Hospital ABC',
-        nomeCidade: 'Campinas',
-        siglaUF: 'SP',
-      ),
-      dataInicio: DateTime(2022, 6, 6),
-      nomeReceptor: "Tales",
-    ),
-    Campanha(
-      organizador: Usuario(
-          nome: 'Joao',
-          email: 'julia@gmail.com',
-          telefone: '2345455456',
-          tipoSanguineo: 'A-'),
-      tipoSanguineo: 'AB+',
-      qtdSolicitada: 10,
-      local: LocalColeta(
-        nomeLocal: 'Hospital ABC',
-        nomeCidade: 'Campinas',
-        siglaUF: 'SP',
-      ),
-      dataInicio: DateTime(2022, 6, 6),
-    )
-  ];
-
-  List<Campanha> read() {
+  Future<List<Map>> read() async {
+    var db = await DatabaseHandler.instance.database;
+    List<Map> campanhas = await db
+        .rawQuery("""SELECT camp.idCampanha, camp.idUsuario, camp.nomeReceptor,
+              camp.idLocal, camp.tipoSanguineo, camp.qtdSolicitada,
+              COUNT(d.idCampanha) AS qtdDoada, camp.dataInicio, camp.ativa,
+              usr.nomeusuario, loc.idLocal, loc.nomeLocal, loc.logradouro,
+              loc.numero, loc.complemento, loc.bairro, loc.cep, c.idCidade,
+              c.nomeCidade, c.ibge, e.idEstado, e.nomeEstado, e.siglaUF
+              FROM campanhas as camp
+              INNER JOIN usuarios as usr on camp.idUsuario == usr.idusuario
+              INNER JOIN locais_coleta as loc ON camp.idLocal == loc.idLocal
+              INNER JOIN cidades as c ON loc.idCidade == c.idCidade
+              INNER JOIN estados as e on c.idEstado == e.idEstado
+              LEFT JOIN doacoes AS d on camp.idCampanha == d.idCampanha
+              GROUP BY camp.idCampanha;""");
     return campanhas;
   }
 
-  void create(Campanha campanha) {
-    campanhas.add(campanha);
-  }
+  void create(Campanha campanha) async {}
 
-  void update(Campanha campanha, int index) {
-    campanhas[index] = campanha;
-  }
+  void update(Campanha campanha, int index) async {}
 
-  void delete(campanha) {}
+  void delete(campanha) async {}
 }

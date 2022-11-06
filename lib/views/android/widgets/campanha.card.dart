@@ -1,40 +1,67 @@
 import 'package:doe_sangue/controller/campanha.controller.dart';
+import 'package:doe_sangue/controller/usuario.controller.dart';
 import 'package:doe_sangue/models/campanha.dart';
+import 'package:doe_sangue/models/usuario.dart';
 import 'package:flutter/material.dart';
 
-class CampanhaCard extends StatelessWidget {
-  final campanhaController = CampanhaController();
+class CampanhaCard extends StatefulWidget {
   late TabController tabController;
 
   CampanhaCard(this.tabController, {super.key});
 
   @override
+  State<CampanhaCard> createState() => _CampanhaCardState();
+}
+
+class _CampanhaCardState extends State<CampanhaCard> {
+  final campanhaController = CampanhaController();
+  Future<List<Map>>? campanhas;
+
+  @override
+  void initState() {
+    campanhas = campanhaController.read();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      scrollDirection: Axis.vertical,
-      itemCount: campanhaController.read().length,
-      itemBuilder: (_, index) {
-        final campanha = campanhaController.read()[index];
-        return Align(
-          child: SizedBox(
-            width: MediaQuery.of(context).size.width - 20,
-            child: Card(
-              elevation: 10,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5)),
-              child: ExpansionTile(
-                title: Text('Organizador: ${campanha.organizador!.nome!}'),
-                subtitle: _cardSubtitle(campanha),
-                textColor: Colors.redAccent,
-                children: [
-                  _cardDetails(context, campanha),
-                ],
-              ),
-            ),
-          ),
-        );
-      },
-    );
+    return FutureBuilder(
+        future: campanhas,
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (!snapshot.hasData) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          if (snapshot.hasError) return Text(snapshot.error!.toString());
+          return ListView.builder(
+            scrollDirection: Axis.vertical,
+            itemCount: snapshot.data.length,
+            itemBuilder: (_, index) {
+              var campanhas = snapshot.data!;
+              final campanha = Campanha.fromMap(campanhas[index]);
+              return Align(
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width - 20,
+                  child: Card(
+                    elevation: 10,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5)),
+                    child: ExpansionTile(
+                      title: Text(
+                          'Organizador: ${campanha.organizador!.nomeUsuario!}'),
+                      subtitle: _cardSubtitle(campanha),
+                      textColor: Colors.redAccent,
+                      children: [
+                        _cardDetails(context, campanha),
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            },
+          );
+        });
   }
 
   Widget _cardSubtitle(Campanha campanha) {
@@ -42,8 +69,8 @@ class CampanhaCard extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-            'Receptor: ${campanha.nomeReceptor ?? campanha.organizador!.nome!}'),
-        Text('Cidade : ${campanha.local}/ ${campanha.local}')
+            'Receptor: ${campanha.nomeReceptor ?? campanha.organizador!.nomeUsuario!}'),
+        Text('Cidade: ${campanha.local?.nomeCidade}/${campanha.local?.siglaUF}')
       ],
     );
   }
@@ -58,7 +85,7 @@ class CampanhaCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Local: ${campanha.local}'),
+              Text('Local: ${campanha.local?.nomeLocal}'),
               Text('Doações: ${campanha.qtdDoada}/${campanha.qtdSolicitada}'),
             ],
           ),
@@ -96,7 +123,7 @@ class CampanhaCard extends StatelessWidget {
         TextButton(
           onPressed: () {
             Navigator.pop(context);
-            tabController.animateTo(0);
+            widget.tabController.animateTo(0);
           },
           child: const Text('Confirmar'),
         ),

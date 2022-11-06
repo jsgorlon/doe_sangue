@@ -1,6 +1,6 @@
 class Usuario {
   int? idUsuario;
-  String? nome;
+  String? nomeUsuario;
   String? email;
   String? telefone;
   String? tipoSanguineo;
@@ -13,7 +13,7 @@ class Usuario {
 
   Usuario({
     this.idUsuario,
-    this.nome,
+    this.nomeUsuario,
     this.email,
     this.telefone,
     this.tipoSanguineo,
@@ -27,11 +27,12 @@ class Usuario {
 
   Usuario.fromMap(Map<dynamic, dynamic> map) {
     idUsuario = map['idUsuario'];
-    nome = map['nome'];
+    nomeUsuario = map['nomeUsuario'];
     email = map['email'];
     telefone = map['telefone'];
     tipoSanguineo = map['tipoSanguineo'];
     totalDoacoes = map['totalDoacoes'];
+    ativo = map['ativo'] == 1 ? true : false;
     totalCampanhas = map['totalCompanhas'];
     dataUltimaDoacao = map['dataUltimaDoacao'];
   }
@@ -39,7 +40,7 @@ class Usuario {
   Map<String, dynamic> toMap() {
     return {
       'idUsuario': idUsuario,
-      'nome': nome,
+      'nomeUsuario': nomeUsuario,
       'email': email,
       'telefone': telefone,
       'tipoSanguineo': tipoSanguineo,

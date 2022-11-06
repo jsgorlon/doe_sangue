@@ -1,21 +1,23 @@
 import 'package:doe_sangue/models/usuario.dart';
+import 'package:doe_sangue/services/database_handler.dart';
 
 class UsuarioController {
-  final usuarios = [
-    Usuario(
-        nome: 'João',
-        email: 'joao@gmail.com',
-        telefone: '1779939596',
-        tipoSanguineo: "AB"),
-  ];
-
-  List<Usuario> read() {
-    return usuarios;
+  Future<List<Map>> read() async {
+    var db = await DatabaseHandler.instance.database;
+    List<Map> doadores = await db.rawQuery("SELECT * FROM usuarios;");
+    db.close();
+    return doadores;
   }
 
-  void create(Usuario usuario) {
-    usuarios.add(usuario);
+  Future<List<Map>> readById(int id) async {
+    var db = await DatabaseHandler.instance.database;
+    List<Map> doador =
+        await db.rawQuery("SELECT * FROM usuarios WHERE idUsuario == $id;");
+    db.close();
+    return doador;
   }
+
+  void create(Usuario usuario) {}
 
   void update(Usuario usuario) {}
 

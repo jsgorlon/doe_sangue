@@ -1,10 +1,10 @@
 class LocalColeta {
   int? idLocal;
   String? nomeLocal;
-  String? logradoruo;
+  String? logradouro;
   String? bairro;
   String? cep;
-  int? numero;
+  String? numero;
   String? complemento;
   int? idCidade;
   String? nomeCidade;
@@ -16,7 +16,7 @@ class LocalColeta {
   LocalColeta({
     this.idLocal,
     this.nomeLocal,
-    this.logradoruo,
+    this.logradouro,
     this.bairro,
     this.cep,
     this.numero,
@@ -31,5 +31,17 @@ class LocalColeta {
 
   LocalColeta.fromMap(Map<dynamic, dynamic> map) {
     idLocal = map['idLocal'];
+    nomeLocal = map['nomeLocal'];
+    logradouro = map['logradouro'];
+    bairro = map['bairro'];
+    cep = map['cep'];
+    numero = map['numero'];
+    complemento = map['complemento'];
+    idCidade = map['idCidade'];
+    nomeCidade = map['nomeCidade'];
+    ibge = map['ibge'];
+    idEstado = map['idEstado'];
+    nomeEstado = map['nomeEstado'];
+    siglaUF = map['siglaUF'];
   }
 }
