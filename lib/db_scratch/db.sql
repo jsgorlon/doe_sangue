@@ -6,6 +6,7 @@ CREATE TABLE usuarios (
     tipoSanguineo   TEXT      NOT NULL,
     sexo            TEXT      NOT NULL,
     dataNascimento  DATETIME  NOT NULL,
+    ultimaDoacao    DATETIME  NULL,
     dataCadastro    DATETIME  NOT NULL DEFAULT current_timestamp,
     senha           TEXT      NOT NULL,
     ativo           BIT       NOT NULL DEFAULT 1

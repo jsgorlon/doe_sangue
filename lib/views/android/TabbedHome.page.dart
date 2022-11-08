@@ -131,7 +131,7 @@ class _TabbedHomeState extends State<TabbedHome>
               accountEmail: Text('email@email.com'), //user data
             ),
             ListTile(
-              title: Text('Minha conta'),
+              title: Text('Meu perfil'),
               onTap: () {
                 Navigator.of(context).pushNamed('/profile');
               },
@@ -141,7 +141,7 @@ class _TabbedHomeState extends State<TabbedHome>
               title: Text('Localizar Hemocentro'),
               onTap: () {
                 MapsLauncher.launchQuery(
-                    'hemocentro');                             
+                    'doar sangue');                             
               },
             ),
 
