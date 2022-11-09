@@ -1,7 +1,5 @@
 import 'package:doe_sangue/controller/campanha.controller.dart';
-import 'package:doe_sangue/controller/usuario.controller.dart';
 import 'package:doe_sangue/models/campanha.dart';
-import 'package:doe_sangue/models/usuario.dart';
 import 'package:flutter/material.dart';
 
 class CampanhaCard extends StatefulWidget {
@@ -65,12 +63,14 @@ class _CampanhaCardState extends State<CampanhaCard> {
   }
 
   Widget _cardSubtitle(Campanha campanha) {
-    return Row(
+    return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
             'Receptor: ${campanha.nomeReceptor ?? campanha.organizador!.nomeUsuario!}'),
-        Text('Cidade: ${campanha.local?.nomeCidade}/${campanha.local?.siglaUF}')
+        Text(
+            'Cidade: ${campanha.local?.cidade?.nomeCidade}/${campanha.local?.cidade?.estado?.nomeEstado}')
       ],
     );
   }
@@ -98,11 +98,12 @@ class _CampanhaCardState extends State<CampanhaCard> {
             ],
           ),
           ElevatedButton(
+            child: const Text('Registrar Doação'),
+            style: ElevatedButton.styleFrom(primary: Colors.redAccent),
             onPressed: () => showDialog<String>(
                 context: context,
                 builder: (BuildContext context) =>
                     _donationConfirmation(context)),
-            child: const Text('Registrar Doação'),
           )
         ],
       ),
