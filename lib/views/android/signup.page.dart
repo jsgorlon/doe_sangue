@@ -8,13 +8,10 @@ import 'package:intl/intl.dart';
 
 import '../../models/usuario.dart';
 
-
 var maskFormatterPhone = MaskTextInputFormatter(
-  mask: '(##) #####-####', 
-  filter: { "#": RegExp(r'[0-9]') },
-  type: MaskAutoCompletionType.lazy
-);
-
+    mask: '(##) #####-####',
+    filter: {"#": RegExp(r'[0-9]')},
+    type: MaskAutoCompletionType.lazy);
 
 class SignupPage extends StatefulWidget {
   @override
@@ -22,9 +19,7 @@ class SignupPage extends StatefulWidget {
 }
 
 class _SignupPageState extends State<SignupPage> {
-
   TextEditingController birthdate = TextEditingController();
-
 
   String? nomeUsuario;
   String? sexo;
@@ -37,18 +32,18 @@ class _SignupPageState extends State<SignupPage> {
   final formKey = GlobalKey<FormState>();
 
   void save(BuildContext context) async {
-  formKey.currentState!.save();  
-  var usuarioController = UsuarioController();
-  usuarioController.create(Usuario(nomeUsuario, sexo, dataNascimento, email, telefone, tipoSanguineo, senha));
-  Navigator.of(context).pop();
+    formKey.currentState!.save();
+    var usuarioController = UsuarioController();
+    usuarioController.create(Usuario(nomeUsuario, sexo, dataNascimento, email,
+        telefone, tipoSanguineo, senha));
+    Navigator.of(context).pop();
   }
 
   stringToData(String data) {
-  dataNascimento = DateTime.parse(data);
-  } 
+    dataNascimento = DateTime.parse(data);
+  }
 
   @override
-
   void initState() {
     super.initState();
   }
@@ -67,12 +62,11 @@ class _SignupPageState extends State<SignupPage> {
       ),
       body: Form(
         key: formKey,
-        child: Container(          
+        child: Container(
           padding: const EdgeInsets.only(top: 10, left: 40, right: 40),
           child: ListView(
             children: <Widget>[
-      
-              TextFormField(                
+              TextFormField(
                 keyboardType: TextInputType.text,
                 decoration: const InputDecoration(
                   icon: Icon(Icons.person),
@@ -88,65 +82,58 @@ class _SignupPageState extends State<SignupPage> {
                 ),
                 onSaved: (name) => nomeUsuario = name,
               ),
-      
               const SizedBox(
                 height: 10,
-                ),
-
-              TextFormField(                
+              ),
+              TextFormField(
                 controller: birthdate,
-                decoration: const InputDecoration( 
+                decoration: const InputDecoration(
                     icon: Icon(Icons.calendar_today),
-                    labelText: "Data de nascimento" 
-                    ),
+                    labelText: "Data de nascimento"),
                 readOnly: true,
                 onTap: () async {
                   DateTime? birthDate = await showDatePicker(
-                      context: context, 
-                      initialDate: DateTime.now(),
-                      firstDate: DateTime(1900), 
-                      lastDate: DateTime.now(),
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime(1900),
+                    lastDate: DateTime.now(),
                   );
-      
-                if(birthDate != null ){                                           
-                      String date = DateFormat('yyyy-MM-dd').format(birthDate);
+
+                  if (birthDate != null) {
+                    String date = DateFormat('yyyy-MM-dd').format(birthDate);
                     setState(() {
                       birthdate.text = date;
-                      } 
-                    );
+                    });
                   }
                 },
                 onSaved: (date) => stringToData(date!),
               ),
-      
               const SizedBox(
-                  height: 10,
-                  ),
-      
-              DropdownButtonFormField(                
-                decoration: const InputDecoration(                
+                height: 10,
+              ),
+              DropdownButtonFormField(
+                decoration: const InputDecoration(
                   icon: FaIcon(FontAwesomeIcons.venusMars),
                   labelText: "Gênero",
                   labelStyle: TextStyle(fontSize: 16, color: Colors.white),
-                ), 
-                items: <String>['Masculino', 'Feminino'].map<DropdownMenuItem<String>>((String gender) {
+                ),
+                items: <String>['Masculino', 'Feminino']
+                    .map<DropdownMenuItem<String>>((String gender) {
                   return DropdownMenuItem<String>(
                     value: gender,
-                    child: Text(gender,
+                    child: Text(
+                      gender,
                       style: const TextStyle(fontSize: 16),
-                      ),
-                    );
-                  }
-                ).toList(),
-                onChanged: (String? gender) {  },
+                    ),
+                  );
+                }).toList(),
+                onChanged: (String? gender) {},
                 onSaved: (gender) => sexo = gender,
               ),
-      
               const SizedBox(
                 height: 10,
-                ),
-      
-              TextFormField(                
+              ),
+              TextFormField(
                 keyboardType: TextInputType.emailAddress,
                 decoration: const InputDecoration(
                   icon: Icon(Icons.email),
@@ -161,11 +148,9 @@ class _SignupPageState extends State<SignupPage> {
                 ),
                 onSaved: (adress) => email = adress,
               ),
-      
               const SizedBox(
                 height: 10,
-                ),
-      
+              ),
               TextFormField(
                 inputFormatters: [maskFormatterPhone],
                 keyboardType: TextInputType.phone,
@@ -182,34 +167,40 @@ class _SignupPageState extends State<SignupPage> {
                 ),
                 onSaved: (phone) => telefone = phone,
               ),
-      
               const SizedBox(
                 height: 10,
-                ),
-      
-              DropdownButtonFormField(                
+              ),
+              DropdownButtonFormField(
                 decoration: const InputDecoration(
                   icon: Icon(Icons.bloodtype),
                   labelText: "Tipo sanguíneo",
                   labelStyle: TextStyle(fontSize: 16, color: Colors.white),
-                ), 
-                items: <String>['A+', 'B+', 'AB+', 'O+', 'A-', 'B-', 'AB-', 'O-'].map<DropdownMenuItem<String>>((String value) {
+                ),
+                items: <String>[
+                  'A+',
+                  'B+',
+                  'AB+',
+                  'O+',
+                  'A-',
+                  'B-',
+                  'AB-',
+                  'O-'
+                ].map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
-                    child: Text(value,
+                    child: Text(
+                      value,
                       style: const TextStyle(fontSize: 16),
-                      ),
-                    );
-                  }
-                ).toList(),
-                onChanged: (String? value) {  },
+                    ),
+                  );
+                }).toList(),
+                onChanged: (String? value) {},
                 onSaved: (type) => tipoSanguineo = type,
               ),
-      
               const SizedBox(
                 height: 10,
-                ),
-      
+              ),
+
               /*TextFormField(                
                 controller: dateinput,
                 decoration: const InputDecoration( 
@@ -239,8 +230,8 @@ class _SignupPageState extends State<SignupPage> {
               const SizedBox(
                 height: 10,
                 ),*/
-      
-              TextFormField(                
+
+              TextFormField(
                 keyboardType: TextInputType.text,
                 obscureText: true,
                 decoration: const InputDecoration(
@@ -254,11 +245,9 @@ class _SignupPageState extends State<SignupPage> {
                 style: const TextStyle(fontSize: 16),
                 onSaved: (password) => senha = password,
               ),
-      
               const SizedBox(
                 height: 40,
-                ),
-      
+              ),
               Container(
                 height: 60,
                 alignment: Alignment.centerLeft,
@@ -283,13 +272,11 @@ class _SignupPageState extends State<SignupPage> {
                   ),
                 ),
               ),
-      
               const SizedBox(
                 height: 10,
-                ),
-      
-              SizedBox (
-                height: 40,              
+              ),
+              SizedBox(
+                height: 40,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -304,7 +291,6 @@ class _SignupPageState extends State<SignupPage> {
                   ],
                 ),
               ),
-      
             ],
           ),
         ),

@@ -106,8 +106,8 @@ class _TabbedHomeState extends State<TabbedHome>
         children: [
           //TELA 1 Resumo
           ResumoCard(_tabController),
-         
-         //TELA 2 Campanhas
+
+          //TELA 2 Campanhas
           CampanhaCard(_tabController),
 
           //TELA 3 Notificações
@@ -124,7 +124,7 @@ class _TabbedHomeState extends State<TabbedHome>
               ),
               currentAccountPicture: CircleAvatar(
                 backgroundImage: NetworkImage(
-                  "https://www.rd.com/wp-content/uploads/2017/09/01-shutterstock_476340928-Irina-Bg.jpg",
+                  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXA-Uu5DzOUC3DEEh789elx46nvfe-0s-7xg&usqp=CAU",
                 ),
               ),
               accountName: Text('Julia Silva'), //user data
@@ -136,15 +136,12 @@ class _TabbedHomeState extends State<TabbedHome>
                 Navigator.of(context).pushNamed('/profile');
               },
             ),
-
             ListTile(
               title: Text('Localizar Hemocentro'),
               onTap: () {
-                MapsLauncher.launchQuery(
-                    'doar sangue');                             
+                MapsLauncher.launchQuery('doar sangue');
               },
             ),
-
             ListTile(
               title: Text('Sobre a doação'),
               onTap: () {

@@ -1,3 +1,5 @@
+import 'package:doe_sangue/models/doacao.dart';
+
 class Usuario {
   int? idUsuario;
   String? nomeUsuario;
@@ -11,6 +13,7 @@ class Usuario {
   DateTime? dataCadastro;
   int? totalDoacoes;
   int? totalCampanhas;
+  int? campParticipadas;
   DateTime? ultimaDoacao;
 
   Usuario(
@@ -25,6 +28,7 @@ class Usuario {
     this.dataCadastro,
     this.totalDoacoes = 0,
     this.totalCampanhas = 0,
+    this.campParticipadas = 0,
     this.ultimaDoacao,}
   );
 
@@ -32,14 +36,22 @@ class Usuario {
     idUsuario = map['idUsuario'];
     nomeUsuario = map['nomeUsuario'];
     sexo = map['sexo'];
-    dataNascimento = map['dataNascimento'];
+    if(map['dataNascimento'] != null){
+      dataNascimento = DateTime.tryParse(map['dataNascimento']);
+    }
+    if(map['dataCadastro'] != null){
+      dataCadastro = DateTime.tryParse(map['dataCadastro']);
+    }
     email = map['email'];
     telefone = map['telefone'];
     tipoSanguineo = map['tipoSanguineo'];
     totalDoacoes = map['totalDoacoes'];
     ativo = map['ativo'] == 1 ? true : false;
     totalCampanhas = map['totalCampanhas'];
-    ultimaDoacao = map['ultimaDoacao'];
+    campParticipadas = map['campParticipadas'];
+    if(map['ultimaDoacao'] != null){
+      ultimaDoacao = DateTime.tryParse(map['ultimaDoacao']);
+    }
   }
 
   Map<String, dynamic> toMap() {

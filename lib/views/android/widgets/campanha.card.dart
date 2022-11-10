@@ -1,7 +1,5 @@
 import 'package:doe_sangue/controller/campanha.controller.dart';
-import 'package:doe_sangue/controller/usuario.controller.dart';
 import 'package:doe_sangue/models/campanha.dart';
-import 'package:doe_sangue/models/usuario.dart';
 import 'package:flutter/material.dart';
 
 class CampanhaCard extends StatefulWidget {
