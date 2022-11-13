@@ -139,11 +139,7 @@ class _TabbedHomeState extends State<TabbedHome>
             ListTile(
               title: Text('Localizar Hemocentro'),
               onTap: () {
-<<<<<<< HEAD
-                MapsLauncher.launchQuery('hemocentro');
-=======
                 MapsLauncher.launchQuery('doar sangue');
->>>>>>> 1f4b364fa0fa039c310083da5a226bc93f5fea6a
               },
             ),
             ListTile(
