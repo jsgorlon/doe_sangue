@@ -67,7 +67,7 @@ class DatabaseHandler {
         await database.execute(
             """INSERT INTO estados(nomeEstado, siglaUF) VALUES ("São Paulo", "SP"), ("Minas Gerais", "MG");""");
         await database.execute(
-            """INSERT INTO cidades(nomeCidade, idEstado, ibge) VALUES ("São José do Rio Preto", 1, 3549805), ("Patos de Minas", 2, 3148004);""");
+            """INSERT INTO cidades(nomeCidade, idEstado, ibge) VALUES ("São José do Rio Preto", 1, 3549805), ("Patos de Minas", 2, 3148004), ("Olímpia", 1, 345345), ("Uberaba", 2, 345645);""");
         await database.execute(
             """INSERT INTO campanhas(idUsuario, nomeReceptor, idLocal, tipoSanguineo, qtdSolicitada, dataInicio, ativa) VALUES (2, "Carla", 2, "A+", 5, "2022-01-05", 0);""");
         await database.execute(

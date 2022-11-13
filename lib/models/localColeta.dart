@@ -1,3 +1,5 @@
+import 'package:doe_sangue/models/cidade.dart';
+
 class LocalColeta {
   int? idLocal;
   String? nomeLocal;
@@ -6,12 +8,7 @@ class LocalColeta {
   String? cep;
   String? numero;
   String? complemento;
-  int? idCidade;
-  String? nomeCidade;
-  int? ibge;
-  int? idEstado;
-  String? nomeEstado;
-  String? siglaUF;
+  Cidade? cidade;
 
   LocalColeta({
     this.idLocal,
@@ -21,12 +18,7 @@ class LocalColeta {
     this.cep,
     this.numero,
     this.complemento,
-    this.idCidade,
-    this.nomeCidade,
-    this.ibge,
-    this.idEstado,
-    this.nomeEstado,
-    this.siglaUF,
+    this.cidade,
   });
 
   LocalColeta.fromMap(Map<dynamic, dynamic> map) {
@@ -37,11 +29,6 @@ class LocalColeta {
     cep = map['cep'];
     numero = map['numero'];
     complemento = map['complemento'];
-    idCidade = map['idCidade'];
-    nomeCidade = map['nomeCidade'];
-    ibge = map['ibge'];
-    idEstado = map['idEstado'];
-    nomeEstado = map['nomeEstado'];
-    siglaUF = map['siglaUF'];
+    cidade = Cidade.fromMap(map);
   }
 }

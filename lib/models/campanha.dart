@@ -27,7 +27,7 @@ class Campanha {
   Campanha.fromMap(Map<dynamic, dynamic> map) {
     idCampanha = map['idCampanha'];
     organizador = Usuario.fromMap(map);
-    nomeReceptor = map['nomeReceptor'] ?? "";
+    nomeReceptor = map['nomeReceptor'];
     tipoSanguineo = map['tipoSanguineo'];
     qtdSolicitada = map['qtdSolicitada'];
     qtdDoada = map['qtdDoada'] ?? 0;

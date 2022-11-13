@@ -106,8 +106,8 @@ class _TabbedHomeState extends State<TabbedHome>
         children: [
           //TELA 1 Resumo
           ResumoCard(_tabController),
-         
-         //TELA 2 Campanhas
+
+          //TELA 2 Campanhas
           CampanhaCard(_tabController),
 
           //TELA 3 Notificações
@@ -136,15 +136,12 @@ class _TabbedHomeState extends State<TabbedHome>
                 Navigator.of(context).pushNamed('/profile');
               },
             ),
-
             ListTile(
               title: Text('Localizar Hemocentro'),
               onTap: () {
-                MapsLauncher.launchQuery(
-                    'hemocentro');                             
+                MapsLauncher.launchQuery('hemocentro');
               },
             ),
-
             ListTile(
               title: Text('Sobre a doação'),
               onTap: () {

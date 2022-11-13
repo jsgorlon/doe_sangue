@@ -21,9 +21,16 @@ class _CampanhaCardState extends State<CampanhaCard> {
     super.initState();
   }
 
+  Future<void> _refresh() {
+    campanhas = campanhaController.read();
+    return Future.delayed(
+      Duration(seconds: 1),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
+    return FutureBuilder<List<Map<dynamic, dynamic>>>(
         future: campanhas,
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (!snapshot.hasData) {
@@ -32,32 +39,35 @@ class _CampanhaCardState extends State<CampanhaCard> {
             );
           }
           if (snapshot.hasError) return Text(snapshot.error!.toString());
-          return ListView.builder(
-            scrollDirection: Axis.vertical,
-            itemCount: snapshot.data.length,
-            itemBuilder: (_, index) {
-              var campanhas = snapshot.data!;
-              final campanha = Campanha.fromMap(campanhas[index]);
-              return Align(
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width - 20,
-                  child: Card(
-                    elevation: 10,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5)),
-                    child: ExpansionTile(
-                      title: Text(
-                          'Organizador: ${campanha.organizador!.nomeUsuario}'),
-                      subtitle: _cardSubtitle(campanha),
-                      textColor: Colors.redAccent,
-                      children: [
-                        _cardDetails(context, campanha),
-                      ],
+          return RefreshIndicator(
+            onRefresh: _refresh,
+            child: ListView.builder(
+              scrollDirection: Axis.vertical,
+              itemCount: snapshot.data.length,
+              itemBuilder: (_, index) {
+                var campanhas = snapshot.data!;
+                final campanha = Campanha.fromMap(campanhas[index]);
+                return Align(
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width - 20,
+                    child: Card(
+                      elevation: 10,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5)),
+                      child: ExpansionTile(
+                        title: Text(
+                            'Organizador: ${campanha.organizador!.nomeUsuario}'),
+                        subtitle: _cardSubtitle(campanha),
+                        textColor: Colors.redAccent,
+                        children: [
+                          _cardDetails(context, campanha),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              );
-            },
+                );
+              },
+            ),
           );
         });
   }
