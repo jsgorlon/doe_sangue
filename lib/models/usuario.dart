@@ -1,3 +1,5 @@
+import 'package:doe_sangue/models/doacao.dart';
+
 class Usuario {
   int? idUsuario;
   String? nomeUsuario;
@@ -11,10 +13,10 @@ class Usuario {
   DateTime? dataCadastro;
   int? totalDoacoes;
   int? totalCampanhas;
-  DateTime? dataUltimaDoacao;
+  int? campParticipadas;
+  DateTime? ultimaDoacao;
 
-  Usuario({
-    this.idUsuario,
+  Usuario(
     this.nomeUsuario,
     this.sexo,
     this.dataNascimento,
@@ -22,37 +24,45 @@ class Usuario {
     this.telefone,
     this.tipoSanguineo,
     this.senha,
-    this.ativo,
+    {this.ativo,
     this.dataCadastro,
     this.totalDoacoes = 0,
     this.totalCampanhas = 0,
-    this.dataUltimaDoacao,
-  });
+    this.campParticipadas = 0,
+    this.ultimaDoacao,}
+  );
 
   Usuario.fromMap(Map<dynamic, dynamic> map) {
     idUsuario = map['idUsuario'];
     nomeUsuario = map['nomeUsuario'];
     sexo = map['sexo'];
-    dataNascimento = map['dataNascimento'];
+    if(map['dataNascimento'] != null){
+      dataNascimento = DateTime.tryParse(map['dataNascimento']);
+    }
+    if(map['dataCadastro'] != null){
+      dataCadastro = DateTime.tryParse(map['dataCadastro']);
+    }
     email = map['email'];
     telefone = map['telefone'];
     tipoSanguineo = map['tipoSanguineo'];
     totalDoacoes = map['totalDoacoes'];
     ativo = map['ativo'] == 1 ? true : false;
-    totalCampanhas = map['totalCompanhas'];
-    dataUltimaDoacao = map['dataUltimaDoacao'];
+    totalCampanhas = map['totalCampanhas'];
+    campParticipadas = map['campParticipadas'];
+    if(map['ultimaDoacao'] != null){
+      ultimaDoacao = DateTime.tryParse(map['ultimaDoacao']);
+    }
   }
 
   Map<String, dynamic> toMap() {
     return {
-      'idUsuario': idUsuario,
       'nomeUsuario': nomeUsuario,
+      'sexo' : sexo,
+      'dataNascimento' : dataNascimento.toString(),
       'email': email,
       'telefone': telefone,
       'tipoSanguineo': tipoSanguineo,
-      'totalDoacoes': totalDoacoes,
-      'totalCompanhas': totalCampanhas,
-      'dataUltimaDoacao': dataUltimaDoacao,
+      'senha' : senha,
     };
   }
 }

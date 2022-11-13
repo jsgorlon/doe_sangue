@@ -1,23 +1,36 @@
 import 'package:doe_sangue/models/usuario.dart';
 import 'package:doe_sangue/services/database_handler.dart';
 
+
 class UsuarioController {
+
   Future<List<Map>> read() async {
     var db = await DatabaseHandler.instance.database;
-    List<Map> doadores = await db.rawQuery("SELECT * FROM usuarios;");
-    db.close();
-    return doadores;
+    List<Map> usuarios = await db.rawQuery("SELECT * FROM usuarios");
+    return usuarios;
   }
 
   Future<List<Map>> readById(int id) async {
     var db = await DatabaseHandler.instance.database;
-    List<Map> doador =
-        await db.rawQuery("SELECT * FROM usuarios WHERE idUsuario == $id;");
-    db.close();
-    return doador;
+    List<Map> usuario =
+        await db.rawQuery("""SELECT user.nomeUsuario, user.sexo,
+              user.dataNascimento, user.email, user.telefone, user.tipoSanguineo,
+              user.ativo, user.dataCadastro, COUNT(d.idDoador) AS totalDoacoes, 
+              COUNT(d.idCampanha) as campParticipadas, COUNT(camp.idCriador) AS totalCampanhas,
+              max(d.dataDoacao) as ultimaDoacao
+              FROM usuarios as user
+              LEFT JOIN campanhas as camp on camp.idCriador == user.idUsuario
+              LEFT JOIN doacoes as d on user.idUsuario == d.idDoador
+              WHERE idUsuario == $id;""");
+    return usuario;
   }
 
-  void create(Usuario usuario) {}
+  Future<void> create(Usuario usuario) async {
+    var db = await DatabaseHandler.instance.database;
+    await db.insert('usuarios', usuario.toMap());
+
+    return(print('${usuario.nomeUsuario}'));
+  }
 
   void update(Usuario usuario) {}
 

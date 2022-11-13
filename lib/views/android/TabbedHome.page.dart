@@ -124,14 +124,14 @@ class _TabbedHomeState extends State<TabbedHome>
               ),
               currentAccountPicture: CircleAvatar(
                 backgroundImage: NetworkImage(
-                  "https://www.rd.com/wp-content/uploads/2017/09/01-shutterstock_476340928-Irina-Bg.jpg",
+                  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXA-Uu5DzOUC3DEEh789elx46nvfe-0s-7xg&usqp=CAU",
                 ),
               ),
               accountName: Text('Julia Silva'), //user data
               accountEmail: Text('email@email.com'), //user data
             ),
             ListTile(
-              title: Text('Minha conta'),
+              title: Text('Meu perfil'),
               onTap: () {
                 Navigator.of(context).pushNamed('/profile');
               },
@@ -139,7 +139,11 @@ class _TabbedHomeState extends State<TabbedHome>
             ListTile(
               title: Text('Localizar Hemocentro'),
               onTap: () {
+<<<<<<< HEAD
                 MapsLauncher.launchQuery('hemocentro');
+=======
+                MapsLauncher.launchQuery('doar sangue');
+>>>>>>> 1f4b364fa0fa039c310083da5a226bc93f5fea6a
               },
             ),
             ListTile(
