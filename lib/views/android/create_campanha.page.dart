@@ -61,6 +61,10 @@ class _CreateCampanhaState extends State<CreateCampanha> {
           (e) => Cidade.fromMap(e),
         )
         .toList();
+    setState(() {
+      selectedCity = cidades.first;
+      updateLocais(selectedCity?.idCidade);
+    });
   }
 
   void updateLocais(int? idCidade) async {
@@ -74,6 +78,9 @@ class _CreateCampanhaState extends State<CreateCampanha> {
           (e) => LocalColeta.fromMap(e),
         )
         .toList();
+    setState(() {
+      selectedLocal = locaisColeta.first;
+    });
   }
 
   Widget createButton() => ElevatedButton(
@@ -90,6 +97,10 @@ class _CreateCampanhaState extends State<CreateCampanha> {
             onChanged: (bool? value) {
               setState(() {
                 hasReceptor = value!;
+                if (!hasReceptor) {
+                  tipoSanguineo = null;
+                  receptor = null;
+                }
               });
             },
           ),
@@ -115,11 +126,14 @@ class _CreateCampanhaState extends State<CreateCampanha> {
                 ),
                 border: OutlineInputBorder(),
               ),
-              validator: ((value) {
-                if (value == null || value.isEmpty) {
+              validator: ((qtdBolsas) {
+                if (qtdBolsas == null || qtdBolsas.isEmpty) {
                   return 'Valor obrigatório';
                 }
               }),
+              onChanged: (qtdBolsas) {
+                qtdBolsasSolicitadas = int.parse(qtdBolsas);
+              },
             ),
           ),
           Container(
@@ -127,8 +141,15 @@ class _CreateCampanhaState extends State<CreateCampanha> {
               visible: hasReceptor,
               child: DropdownButtonFormField(
                 decoration: InputDecoration(
-                    border: OutlineInputBorder(), labelText: "Tipo sanguíneo"),
-                onChanged: (value) {},
+                    prefixIcon: Icon(
+                      Icons.bloodtype_sharp,
+                      color: Colors.redAccent,
+                    ),
+                    border: OutlineInputBorder(),
+                    labelText: "Tipo sanguíneo"),
+                onChanged: (value) {
+                  tipoSanguineo = value;
+                },
                 value: bloodTypes.first,
                 items: bloodTypes.map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
@@ -142,10 +163,14 @@ class _CreateCampanhaState extends State<CreateCampanha> {
           Visibility(
             visible: hasReceptor,
             child: Container(
+              margin: EdgeInsets.only(bottom: 15),
               child: TextFormField(
                 enabled: hasReceptor,
                 decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.person_add_alt_1_sharp),
+                  prefixIcon: Icon(
+                    Icons.person_add_alt_1_sharp,
+                    color: Colors.redAccent,
+                  ),
                   border: OutlineInputBorder(),
                   hintText: 'Quem receberá a doação?',
                   labelText: 'Nome Receptor',
@@ -166,11 +191,15 @@ class _CreateCampanhaState extends State<CreateCampanha> {
           List<Estado> items =
               snapshot.data!.map((v) => Estado.fromMap(v)).toList();
 
-          updateCidade(items.first.idEstado);
+          //updateCidade(items.first.idEstado);
 
           return DropdownButtonFormField<Estado>(
             decoration: InputDecoration(
               labelText: 'Estado',
+              prefixIcon: Icon(
+                Icons.location_pin,
+                color: Colors.redAccent,
+              ),
               border: OutlineInputBorder(),
             ),
             value: (selectedState == null)
@@ -202,6 +231,10 @@ class _CreateCampanhaState extends State<CreateCampanha> {
     return DropdownButtonFormField<Cidade>(
       decoration: InputDecoration(
         labelText: 'Cidade',
+        prefixIcon: Icon(
+          Icons.location_city,
+          color: Colors.redAccent,
+        ),
         border: OutlineInputBorder(),
       ),
       value: (selectedCity == null)
@@ -227,6 +260,10 @@ class _CreateCampanhaState extends State<CreateCampanha> {
     return DropdownButtonFormField<LocalColeta>(
       decoration: InputDecoration(
         labelText: 'Local',
+        prefixIcon: Icon(
+          Icons.business,
+          color: Colors.redAccent,
+        ),
         border: OutlineInputBorder(),
       ),
       value: (selectedLocal == null)
@@ -252,23 +289,62 @@ class _CreateCampanhaState extends State<CreateCampanha> {
       appBar: AppBar(
         title: Text("Criar Campanha"),
       ),
-      body: Form(
-        key: formKey,
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 15),
-          child: Column(
-            children: [
-              checkBox(),
-              comboBox(),
-              Container(
-                margin: EdgeInsets.only(bottom: 15),
-                child: buildStates(),
-              ),
-              if (cidades.isNotEmpty) Container(child: buildCities()),
-              if (locaisColeta.isNotEmpty) Container(child: buildLocal()),
-              // buildCities(),
-              // buildLocal(),
-            ],
+      body: SingleChildScrollView(
+        child: Form(
+          key: formKey,
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 15),
+            child: Column(
+              children: [
+                checkBox(),
+                comboBox(),
+                Container(
+                  margin: EdgeInsets.only(bottom: 15),
+                  child: buildStates(),
+                ),
+                if (cidades.isNotEmpty)
+                  Container(
+                    margin: EdgeInsets.only(bottom: 15),
+                    child: buildCities(),
+                  ),
+                if (locaisColeta.isNotEmpty)
+                  Container(
+                    margin: EdgeInsets.only(bottom: 15),
+                    child: buildLocal(),
+                  ),
+                if (selectedState != null &&
+                    selectedCity != null &&
+                    locaisColeta.isEmpty)
+                  Container(
+                    child: Text("Pontos de coleta não encontrados"),
+                  ),
+                if (locaisColeta.isNotEmpty)
+                  TextButton(
+                    style: TextButton.styleFrom(
+                      foregroundColor: Colors.black,
+                      backgroundColor: Colors.redAccent,
+                      fixedSize: const Size(150, 50),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(24),
+                      ),
+                    ),
+                    onPressed: () {
+                      print(receptor);
+                      print(selectedLocal?.nomeLocal);
+                      print(selectedLocal?.idLocal);
+                      print(qtdBolsasSolicitadas);
+                      print(tipoSanguineo);
+                    },
+                    child: const Text(
+                      'Confirmar',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+              ],
+            ),
           ),
         ),
       ),

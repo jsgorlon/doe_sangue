@@ -3,6 +3,7 @@
 import 'package:doe_sangue/views/android/login.page.dart';
 import 'package:doe_sangue/views/android/profile.page.dart';
 import 'package:doe_sangue/views/android/create_campanha.page.dart';
+import 'package:doe_sangue/views/android/widgets/keyboard.dismisser.dart';
 import 'package:flutter/material.dart';
 import 'about.page.dart';
 
@@ -11,15 +12,17 @@ class AndroidApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'DoeSangue',
-      theme: ThemeData.dark(),
-      home: LoginPage(),
-      routes: {
-        '/about': (context) => AboutPage(),
-        '/createCampanha': (context) => CreateCampanha(),
-        '/profile': (context) => ProfilePage(),
-      },
+    return DismissKeyboard(
+      child: MaterialApp(
+        title: 'DoeSangue',
+        theme: ThemeData.dark(),
+        home: LoginPage(),
+        routes: {
+          '/about': (context) => AboutPage(),
+          '/createCampanha': (context) => CreateCampanha(),
+          '/profile': (context) => ProfilePage(),
+        },
+      ),
     );
   }
 }
