@@ -301,7 +301,7 @@ class _ResumoCardState extends State<ResumoCard> {
           : 'Ainda faltam ${usuario.daysToNestDonation()} dias para sua próxima doação';
       return AlertDialog(
         title: const Text(
-          'Você não pode doar',
+          'Não é possível realizar a doação',
           style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
