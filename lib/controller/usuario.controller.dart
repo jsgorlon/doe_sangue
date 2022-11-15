@@ -32,6 +32,18 @@ class UsuarioController {
     return(print('${usuario.nomeUsuario}'));
   }
 
+  Future<Usuario?> loginUser(String Email, String Senha) async {
+    var db = await DatabaseHandler.instance.database;
+    var usuario = await db.rawQuery(""" SELECT * FROM usuarios WHERE email = '$Email' AND senha = '$Senha';""");
+
+    if (usuario.isNotEmpty) {
+      return Usuario.fromMap(usuario.first);
+    }
+    else{
+      return null;  
+    }  
+  }
+
   void update(Usuario usuario) {}
 
   void delete(Usuario usuario) {}

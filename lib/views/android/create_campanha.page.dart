@@ -1,4 +1,3 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cool_dropdown/cool_dropdown.dart';
 import 'package:doe_sangue/controller/local_coleta.controller.dart';
 import 'package:doe_sangue/models/campanha.dart';
@@ -20,7 +19,7 @@ class _CreateCampanhaState extends State<CreateCampanha> {
   final localController = LocalColetaController();
   bool hasReceptor = false;
   String? organizador; //Será o usuário do aplicativo
-  String? nomeReceptor;
+  String? receptor;
   String? tipoSanguineo;
   int? qtdBolsasSolicitadas;
   String? local;
@@ -84,31 +83,9 @@ class _CreateCampanhaState extends State<CreateCampanha> {
     });
   }
 
-  Widget createButton(formKey) => TextButton(
-        style: TextButton.styleFrom(
-          foregroundColor: Colors.black,
-          backgroundColor: Colors.redAccent,
-          fixedSize: const Size(150, 50),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(24),
-          ),
-        ),
-        onPressed: () {
-          if (formKey.currentState.validate()) {
-            print(nomeReceptor);
-            print(selectedLocal?.nomeLocal);
-            print(selectedLocal?.idLocal);
-            print(qtdBolsasSolicitadas);
-            print(tipoSanguineo);
-          }
-        },
-        child: const Text(
-          'Confirmar',
-          style: TextStyle(
-            fontSize: 16,
-            color: Colors.white,
-          ),
-        ),
+  Widget createButton() => ElevatedButton(
+        onPressed: () => Navigator.of(context).pop(),
+        child: const Text("Criar"),
       );
 
   Widget checkBox() => Row(
@@ -122,14 +99,14 @@ class _CreateCampanhaState extends State<CreateCampanha> {
                 hasReceptor = value!;
                 if (!hasReceptor) {
                   tipoSanguineo = null;
-                  nomeReceptor = null;
+                  receptor = null;
                 }
               });
             },
           ),
-          const AutoSizeText(
+          Text(
             "As doações serão para outra pessoa",
-            maxFontSize: double.infinity,
+            style: TextStyle(fontSize: 18),
           ),
         ],
       );
@@ -155,7 +132,7 @@ class _CreateCampanhaState extends State<CreateCampanha> {
                 }
               }),
               onChanged: (qtdBolsas) {
-                qtdBolsasSolicitadas = int.tryParse(qtdBolsas);
+                qtdBolsasSolicitadas = int.parse(qtdBolsas);
               },
             ),
           ),
@@ -163,7 +140,7 @@ class _CreateCampanhaState extends State<CreateCampanha> {
             child: Visibility(
               visible: hasReceptor,
               child: DropdownButtonFormField(
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                     prefixIcon: Icon(
                       Icons.bloodtype_sharp,
                       color: Colors.redAccent,
@@ -186,16 +163,8 @@ class _CreateCampanhaState extends State<CreateCampanha> {
           Visibility(
             visible: hasReceptor,
             child: Container(
-              margin: const EdgeInsets.only(bottom: 15),
+              margin: EdgeInsets.only(bottom: 15),
               child: TextFormField(
-                validator: ((nome) {
-                  if (hasReceptor && (nome == null || nome.isEmpty)) {
-                    return 'Nome obrigatório';
-                  }
-                }),
-                onChanged: ((nome) {
-                  nomeReceptor = nome;
-                }),
                 enabled: hasReceptor,
                 decoration: const InputDecoration(
                   prefixIcon: Icon(
@@ -208,7 +177,7 @@ class _CreateCampanhaState extends State<CreateCampanha> {
                 ),
               ),
             ),
-          ),
+          )
         ],
       );
 
@@ -219,18 +188,13 @@ class _CreateCampanhaState extends State<CreateCampanha> {
         builder: (BuildContext context, snapshot) {
           if (snapshot.hasError) return Text(snapshot.error!.toString());
 
-          if (!snapshot.hasData) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
           List<Estado> items =
               snapshot.data!.map((v) => Estado.fromMap(v)).toList();
 
           //updateCidade(items.first.idEstado);
 
           return DropdownButtonFormField<Estado>(
-            decoration: const InputDecoration(
+            decoration: InputDecoration(
               labelText: 'Estado',
               prefixIcon: Icon(
                 Icons.location_pin,
@@ -265,7 +229,7 @@ class _CreateCampanhaState extends State<CreateCampanha> {
 
   Widget buildCities() {
     return DropdownButtonFormField<Cidade>(
-      decoration: const InputDecoration(
+      decoration: InputDecoration(
         labelText: 'Cidade',
         prefixIcon: Icon(
           Icons.location_city,
@@ -294,7 +258,7 @@ class _CreateCampanhaState extends State<CreateCampanha> {
 
   Widget buildLocal() {
     return DropdownButtonFormField<LocalColeta>(
-      decoration: const InputDecoration(
+      decoration: InputDecoration(
         labelText: 'Local',
         prefixIcon: Icon(
           Icons.business,
@@ -323,45 +287,63 @@ class _CreateCampanhaState extends State<CreateCampanha> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Criar Campanha"),
+        title: Text("Criar Campanha"),
       ),
       body: SingleChildScrollView(
         child: Form(
           key: formKey,
-          child: Flexible(
-            child: ConstrainedBox(
-              constraints:
-                  BoxConstraints(maxWidth: MediaQuery.of(context).size.width),
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: Column(
-                  children: [
-                    checkBox(),
-                    comboBox(),
-                    Container(
-                      margin: const EdgeInsets.only(bottom: 15),
-                      child: buildStates(),
-                    ),
-                    if (cidades.isNotEmpty)
-                      Container(
-                        margin: const EdgeInsets.only(bottom: 15),
-                        child: buildCities(),
-                      ),
-                    if (locaisColeta.isNotEmpty)
-                      Container(
-                        margin: const EdgeInsets.only(bottom: 15),
-                        child: buildLocal(),
-                      ),
-                    if (selectedState != null &&
-                        selectedCity != null &&
-                        locaisColeta.isEmpty)
-                      Container(
-                        child: const Text("Pontos de coleta não encontrados"),
-                      ),
-                    if (locaisColeta.isNotEmpty) createButton(formKey),
-                  ],
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 15),
+            child: Column(
+              children: [
+                checkBox(),
+                comboBox(),
+                Container(
+                  margin: EdgeInsets.only(bottom: 15),
+                  child: buildStates(),
                 ),
-              ),
+                if (cidades.isNotEmpty)
+                  Container(
+                    margin: EdgeInsets.only(bottom: 15),
+                    child: buildCities(),
+                  ),
+                if (locaisColeta.isNotEmpty)
+                  Container(
+                    margin: EdgeInsets.only(bottom: 15),
+                    child: buildLocal(),
+                  ),
+                if (selectedState != null &&
+                    selectedCity != null &&
+                    locaisColeta.isEmpty)
+                  Container(
+                    child: Text("Pontos de coleta não encontrados"),
+                  ),
+                if (locaisColeta.isNotEmpty)
+                  TextButton(
+                    style: TextButton.styleFrom(
+                      foregroundColor: Colors.black,
+                      backgroundColor: Colors.redAccent,
+                      fixedSize: const Size(150, 50),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(24),
+                      ),
+                    ),
+                    onPressed: () {
+                      print(receptor);
+                      print(selectedLocal?.nomeLocal);
+                      print(selectedLocal?.idLocal);
+                      print(qtdBolsasSolicitadas);
+                      print(tipoSanguineo);
+                    },
+                    child: const Text(
+                      'Confirmar',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+              ],
             ),
           ),
         ),
