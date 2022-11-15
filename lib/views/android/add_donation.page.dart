@@ -40,7 +40,7 @@ class _AutonomusDonationState extends State<AutonomusDonation> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Container(
-              padding: EdgeInsets.only(bottom: 25),
+              padding: const EdgeInsets.only(bottom: 25),
               child: _localSelector(),
             ),
             if (selectedLocal != null)

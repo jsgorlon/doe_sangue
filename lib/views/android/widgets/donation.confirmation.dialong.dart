@@ -15,8 +15,7 @@ class DonationConfirmationDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (usuario != null && usuario!.daysToNestDonation() > 0 ||
-        (!usuario!.canDonateByAge())) {
+    if (usuario!.daysToNestDonation() > 0 || !usuario!.canDonateByAge()) {
       String alterta = (!usuario!.canDonateByAge())
           ? 'Você está fora da idade permitida para doação'
           : 'Ainda faltam ${usuario!.daysToNestDonation()} dias para sua próxima doação';

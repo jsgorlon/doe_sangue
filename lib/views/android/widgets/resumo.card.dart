@@ -21,7 +21,7 @@ class _ResumoCardState extends State<ResumoCard> {
   final usuarioController = UsuarioController();
   Future<List<Map>>? usuarios;
 
-  var id = 3;
+  var id = 2;
 
   @override
   void initState() {
@@ -187,9 +187,7 @@ class _ResumoCardState extends State<ResumoCard> {
                                             ),
                                           ),
                                           AutoSizeText(
-                                            usuario.totalCampanhas == 0
-                                                ? 'Este usuário não criou nenhuma campanha'
-                                                : '${usuario.totalCampanhas} CAMPANHA(S)',
+                                            '${usuario.totalCampanhas ?? 0} CAMPANHA(S)',
                                             maxLines: 2,
                                             textAlign: TextAlign.center,
                                             group: myGroupInfo,

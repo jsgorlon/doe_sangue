@@ -74,11 +74,9 @@ class Usuario {
               .difference(DateTime.now()))
           .inDays;
       return nextDate;
-    }
-    else{
+    } else {
       return 0;
     }
-    
   }
 
   bool canDonateByAge() {
