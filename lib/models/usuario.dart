@@ -68,11 +68,17 @@ class Usuario {
 
   int daysToNestDonation() {
     int recuperacao = (sexo == 'Masculino') ? 60 : 90;
-    int nextDate = (ultimaDoacao!
-            .add(Duration(days: recuperacao))
-            .difference(DateTime.now()))
-        .inDays;
-    return nextDate;
+    if (ultimaDoacao != null) {
+      int nextDate = (ultimaDoacao!
+              .add(Duration(days: recuperacao))
+              .difference(DateTime.now()))
+          .inDays;
+      return nextDate;
+    }
+    else{
+      return 0;
+    }
+    
   }
 
   bool canDonateByAge() {
