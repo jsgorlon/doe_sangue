@@ -1,5 +1,7 @@
 import 'package:doe_sangue/models/usuario.dart';
 import 'package:doe_sangue/services/database_handler.dart';
+import 'package:doe_sangue/services/location.service.dart';
+import 'package:geocoding/geocoding.dart';
 
 class LocalColetaController {
   Future<List<Map>> read() async {
@@ -32,6 +34,27 @@ class LocalColetaController {
         INNER JOIN estados as e on c.idestado == e.idestado
         WHERE l.idCidade == $idCidade;""");
     return local;
+  }
+
+  Future<List<Map>> readByUserLocation() async {
+    var locator = LocationServices();
+    Placemark place = await locator.getCurrentLocation();
+    var db = await DatabaseHandler.instance.database;
+    try {
+      List<Map> locais = await db.rawQuery(
+          """SELECT local.idLocal, local.nomeLocal, local.logradouro, local.bairro,
+                  local.cep, local.numero, local.complemento,
+                  cidades.idCidade, cidades.nomeCidade, cidades.ibge,
+                  estados.idEstado, estados.nomeEstado, estados.siglaUF
+                  FROM locais_coleta AS local
+                  INNER JOIN cidades ON local.idCidade == cidades.idCidade
+                  INNER JOIN estados ON cidades.idEstado == estados.idEstado
+                  WHERE cidades.nomeCidade == '${place.subAdministrativeArea}' AND estados.nomeEstado == '${place.administrativeArea}';""");
+      return locais;
+    } catch (e) {
+      print(e);
+    }
+    throw Exception();
   }
 
   void create(Usuario usuario) {}

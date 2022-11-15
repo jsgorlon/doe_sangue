@@ -31,4 +31,8 @@ class LocalColeta {
     complemento = map['complemento'];
     cidade = Cidade.fromMap(map);
   }
+
+  toMapsQuery() {
+    return '$logradouro, $numero - $bairro, ${cidade?.nomeCidade} - ${cidade?.estado?.siglaUF}, $cep';
+  }
 }

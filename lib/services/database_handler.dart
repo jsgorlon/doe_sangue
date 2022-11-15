@@ -69,13 +69,13 @@ class DatabaseHandler {
         await database.execute(
             """INSERT INTO cidades(nomeCidade, idEstado, ibge) VALUES ("São José do Rio Preto", 1, 3549805), ("Patos de Minas", 2, 3148004), ("Olímpia", 1, 345345), ("Uberaba", 2, 345645);""");
         await database.execute(
+            """INSERT INTO locais_coleta(idCidade, nomeLocal, logradouro, numero, bairro, cep, complemento) VALUES (1, "Hemocentro Rio Preto", "Av. Jamil Feres Kfouri", "80", "Jardim Panorama", "15091-240", ""), (2, "Fundação Hemominas", "Rua Major Gote", "1255", "Centro", "38700-000", "Segundo Andar"), (3, "Santa Casa", "Rua Síria", "139", "Centro", "38700-000", null);""");
+        await database.execute(
             """INSERT INTO campanhas(idCriador, nomeReceptor, idLocal, tipoSanguineo, qtdSolicitada, dataInicio, ativa) VALUES (2, "Carla", 2, "A+", 5, "2022-01-05", 0);""");
         await database.execute(
             """INSERT INTO campanhas(idCriador, idLocal, tipoSanguineo, qtdSolicitada) VALUES (1, 1, "AB+", 5);""");
         await database.execute(
             """INSERT INTO campanhas(idCriador, nomeReceptor, idLocal, tipoSanguineo, qtdSolicitada) VALUES (2, "Marcia", 2, "O-", 5);""");
-        await database.execute(
-            """INSERT INTO locais_coleta(idCidade, nomeLocal, logradouro, numero, bairro, cep, complemento) VALUES (1, "Hemocentro Rio Preto", "Av. Jamil Feres Kfouri", "80", "Jardim Panorama", "15091-240", ""), (2, "Fundação Hemominas", "Rua Major Gote", "1255", "Centro", "38700-000", "Segundo Andar");""");
         await database.execute(
             """INSERT INTO doacoes(idDoador, idLocal, dataDoacao) VALUES (1, 1, "2022-10-29");""");
         await database.execute(

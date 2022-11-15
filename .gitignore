@@ -42,7 +42,6 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
-lib/views/android/add_donation.page.dart
 lib/views/android/widgets/location.page.dart
 
-.env
+env.dart

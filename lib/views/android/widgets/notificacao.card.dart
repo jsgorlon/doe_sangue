@@ -26,7 +26,7 @@ class _NotificacaoCardState extends State<NotificacaoCard> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: usuarios,
+        future: usuarios,
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (!snapshot.hasData) {
             return const Center(
@@ -48,12 +48,11 @@ class _NotificacaoCardState extends State<NotificacaoCard> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5)),
                     child: ExpansionTile(
-                      title: Text(
-                          'ID: ${usuario.idUsuario}\n'
+                      title: Text('ID: ${usuario.idUsuario}\n'
                           'Data cadastro: ${usuario.dataCadastro?.day}/${usuario.dataCadastro?.month}/${usuario.dataCadastro?.year}\n'
                           'Nascimento: ${usuario.dataNascimento?.day}/${usuario.dataNascimento?.month}/${usuario.dataNascimento?.year}\n'
                           'Nome: ${usuario.nomeUsuario}\n'
-                          'Gênero: ${usuario.sexo}\n'),
+                          'Sexo: ${usuario.sexo}\n'),
                       textColor: Colors.redAccent,
                     ),
                   ),
@@ -63,4 +62,4 @@ class _NotificacaoCardState extends State<NotificacaoCard> {
           );
         });
   }
-      }
+}

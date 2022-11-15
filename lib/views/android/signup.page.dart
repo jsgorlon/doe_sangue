@@ -114,7 +114,7 @@ class _SignupPageState extends State<SignupPage> {
               DropdownButtonFormField(
                 decoration: const InputDecoration(
                   icon: FaIcon(FontAwesomeIcons.venusMars),
-                  labelText: "Gênero",
+                  labelText: "Sexo",
                   labelStyle: TextStyle(fontSize: 16, color: Colors.white),
                 ),
                 items: <String>['Masculino', 'Feminino']

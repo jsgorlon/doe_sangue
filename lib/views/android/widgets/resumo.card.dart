@@ -3,6 +3,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:doe_sangue/controller/usuario.controller.dart';
 import 'package:doe_sangue/models/usuario.dart';
+import 'package:doe_sangue/views/android/add_donation.page.dart';
+import 'package:doe_sangue/views/android/create_campanha.page.dart';
+import 'package:doe_sangue/views/android/widgets/donation.confirmation.dialong.dart';
 import 'package:flutter/material.dart';
 
 class ResumoCard extends StatefulWidget {
@@ -55,9 +58,8 @@ class _ResumoCardState extends State<ResumoCard> {
                         Column(
                           children: [
                             CircleAvatar(
-                              backgroundImage: NetworkImage(
-                                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXA-Uu5DzOUC3DEEh789elx46nvfe-0s-7xg&usqp=CAU",
-                              ),
+                              backgroundImage:
+                                  AssetImage('assets/images/noPhoto.png'),
                               radius: 50.0,
                             ),
                             Text(
@@ -243,11 +245,15 @@ class _ResumoCardState extends State<ResumoCard> {
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
                                   TextButton(
-                                    onPressed: () => showDialog<String>(
-                                        context: context,
-                                        builder: (BuildContext context) =>
-                                            _donationConfirmation(context,
-                                                usuario)), // Next page address
+                                    onPressed: (() {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              AutonomusDonation(usuario),
+                                        ),
+                                      );
+                                    }),
                                     style: TextButton.styleFrom(
                                       foregroundColor: Colors.black,
                                       backgroundColor: Colors.redAccent,
@@ -265,8 +271,15 @@ class _ResumoCardState extends State<ResumoCard> {
                                     ),
                                   ),
                                   TextButton(
-                                    onPressed: () => Navigator.of(context)
-                                        .pushNamed('/createCampanha'),
+                                    onPressed: (() {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              CreateCampanha(),
+                                        ),
+                                      );
+                                    }),
                                     style: TextButton.styleFrom(
                                       foregroundColor: Colors.black,
                                       backgroundColor: Colors.redAccent,
@@ -292,76 +305,5 @@ class _ResumoCardState extends State<ResumoCard> {
                 );
               });
         });
-  }
-
-  AlertDialog _donationConfirmation(BuildContext context, Usuario usuario) {
-    if (usuario.daysToNestDonation() > 0 || (!usuario.canDonateByAge())) {
-      String alterta = (!usuario.canDonateByAge())
-          ? 'Você está fora da idade permitida para doação'
-          : 'Ainda faltam ${usuario.daysToNestDonation()} dias para sua próxima doação';
-      return AlertDialog(
-        title: const Text(
-          'Não é possível realizar a doação',
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        content: Text(textAlign: TextAlign.justify, alterta),
-        actions: <Widget>[
-          TextButton(
-            style: TextButton.styleFrom(backgroundColor: Colors.redAccent),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: const Text(
-              'OK',
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.white,
-              ),
-            ),
-          ),
-        ],
-      );
-    } else {
-      return AlertDialog(
-        title: const Text(
-          'Confirmar doação?',
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        content: const Text(
-            textAlign: TextAlign.justify,
-            'Uma vez confirmada, você só podera doar novamente após o perídodo de recuperação'),
-        actions: <Widget>[
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text(
-              'Cancelar',
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.white,
-              ),
-            ),
-          ),
-          TextButton(
-            style: TextButton.styleFrom(backgroundColor: Colors.redAccent),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: const Text(
-              'Confirmar',
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.white,
-              ),
-            ),
-          ),
-        ],
-      );
-    }
   }
 }

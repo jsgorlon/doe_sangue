@@ -1,13 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:cool_dropdown/cool_dropdown.dart';
 import 'package:doe_sangue/controller/local_coleta.controller.dart';
-import 'package:doe_sangue/models/campanha.dart';
 import 'package:doe_sangue/models/cidade.dart';
 import 'package:doe_sangue/models/estado.dart';
 import 'package:doe_sangue/models/localColeta.dart';
 import 'package:flutter/material.dart';
-
-const List<String> listaEstados = <String>['AM', 'SP'];
 
 class CreateCampanha extends StatefulWidget {
   const CreateCampanha({super.key});
@@ -244,8 +240,8 @@ class _CreateCampanhaState extends State<CreateCampanha> {
                     estado.idEstado == selectedState!.idEstado)),
             items: items.map<DropdownMenuItem<Estado>>((Estado estado) {
               return DropdownMenuItem<Estado>(
-                child: Text("${estado.nomeEstado}"),
                 value: estado,
+                child: Text("${estado.nomeEstado}"),
               );
             }).toList(),
             onChanged: (estado) {
@@ -280,8 +276,8 @@ class _CreateCampanhaState extends State<CreateCampanha> {
       items: cidades.isNotEmpty
           ? cidades!.map<DropdownMenuItem<Cidade>>((Cidade cidade) {
               return DropdownMenuItem<Cidade>(
-                child: Text("${cidade.nomeCidade}"),
                 value: cidade,
+                child: Text("${cidade.nomeCidade}"),
               );
             }).toList()
           : [],
@@ -310,8 +306,8 @@ class _CreateCampanhaState extends State<CreateCampanha> {
           ? locaisColeta!
               .map<DropdownMenuItem<LocalColeta>>((LocalColeta local) {
               return DropdownMenuItem<LocalColeta>(
-                child: Text("${local.nomeLocal}"),
                 value: local,
+                child: Text("${local.nomeLocal}"),
               );
             }).toList()
           : [],

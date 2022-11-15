@@ -1,5 +1,6 @@
 import 'package:doe_sangue/controller/campanha.controller.dart';
 import 'package:doe_sangue/models/campanha.dart';
+import 'package:doe_sangue/services/location.service.dart';
 import 'package:flutter/material.dart';
 
 class CampanhaCard extends StatefulWidget {
@@ -14,6 +15,7 @@ class CampanhaCard extends StatefulWidget {
 class _CampanhaCardState extends State<CampanhaCard> {
   final campanhaController = CampanhaController();
   Future<List<Map>>? campanhas;
+  final LocationServices locator = LocationServices();
 
   @override
   void initState() {
@@ -22,10 +24,18 @@ class _CampanhaCardState extends State<CampanhaCard> {
   }
 
   Future<void> _refresh() {
-    campanhas = campanhaController.read();
+    setState(() {
+      campanhas = campanhaController.read();
+      _testState();
+    });
     return Future.delayed(
       Duration(seconds: 1),
     );
+  }
+
+  void _testState() async {
+    await locator.getCurrentLocation();
+    print(locator.currentAddress);
   }
 
   @override
