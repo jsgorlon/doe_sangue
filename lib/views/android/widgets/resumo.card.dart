@@ -7,6 +7,7 @@ import 'package:doe_sangue/views/android/add_donation.page.dart';
 import 'package:doe_sangue/views/android/create_campanha.page.dart';
 import 'package:doe_sangue/views/android/widgets/donation.confirmation.dialong.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ResumoCard extends StatefulWidget {
   late TabController tabController;
@@ -19,14 +20,24 @@ class ResumoCard extends StatefulWidget {
 
 class _ResumoCardState extends State<ResumoCard> {
   final usuarioController = UsuarioController();
-  Future<List<Map>>? usuarios;
+  List<Map> usuarios = [];
 
-  var id = 2;
+  //var id = 2;
 
   @override
   void initState() {
-    usuarios = usuarioController.readById(id);
+    fetchUsers();
     super.initState();
+  }
+
+  void fetchUsers() async {
+    SharedPreferences sp = await SharedPreferences.getInstance();
+    int id = sp.getInt("idUsuario")!;
+
+    var results = await usuarioController.readById(id);
+    setState(() {
+      usuarios = results.toList(); 
+    });
   }
 
   var myGroupTitle = AutoSizeGroup();
@@ -34,21 +45,12 @@ class _ResumoCardState extends State<ResumoCard> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: usuarios,
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (!snapshot.hasData) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          if (snapshot.hasError) return Text(snapshot.error!.toString());
-          return ListView.builder(
+    return ListView.builder(
               scrollDirection: Axis.vertical,
               padding: const EdgeInsets.only(top: 40, bottom: 40),
-              itemCount: snapshot.data.length,
+              itemCount: usuarios.length,
               itemBuilder: (_, index) {
-                var usuarios = snapshot.data!;
+           
                 final usuario = Usuario.fromMap(usuarios[index]);
                 return SizedBox(
                   height: MediaQuery.of(context).size.height - 250,
@@ -302,6 +304,5 @@ class _ResumoCardState extends State<ResumoCard> {
                       ]),
                 );
               });
-        });
   }
 }

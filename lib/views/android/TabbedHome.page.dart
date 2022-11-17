@@ -1,11 +1,13 @@
 // ignore_for_file: prefer_const_constructors
 // ignore_for_file: prefer_const_literals_to_create_immutables
 
+import 'package:doe_sangue/controller/usuario.controller.dart';
 import 'package:maps_launcher/maps_launcher.dart';
 import 'package:doe_sangue/views/android/widgets/campanha.card.dart';
 import 'package:doe_sangue/views/android/widgets/resumo.card.dart';
 import 'package:doe_sangue/views/android/widgets/notificacao.card.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../models/usuario.dart';
 
@@ -19,10 +21,23 @@ class TabbedHome extends StatefulWidget {
 class _TabbedHomeState extends State<TabbedHome>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  final usuarioController = UsuarioController();
+  List<Map> usuarios = [];
+
+  void fetchUsers() async {
+    SharedPreferences sp = await SharedPreferences.getInstance();
+    int id = sp.getInt("idUsuario")!;
+
+    var results = await usuarioController.readById(id);
+    setState(() {
+      usuarios = results.toList();
+    });
+  }
 
   @override
   void initState() {
     super.initState();
+    fetchUsers();
     _tabController = TabController(length: 3, vsync: this);
     _tabController.addListener(() {
       setState(() {});
@@ -115,41 +130,46 @@ class _TabbedHomeState extends State<TabbedHome>
         ],
       ),
       drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            const UserAccountsDrawerHeader(
-              decoration: BoxDecoration(
-                color: Color.fromARGB(171, 185, 47, 47),
-              ),
-              currentAccountPicture: CircleAvatar(
-                backgroundImage: NetworkImage(
-                  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXA-Uu5DzOUC3DEEh789elx46nvfe-0s-7xg&usqp=CAU",
-                ),
-              ),
-              accountName: Text('Julia Silva'), //user data
-              accountEmail: Text('email@email.com'), //user data
-            ),
-            ListTile(
-              title: Text('Meu perfil'),
-              onTap: () {
-                Navigator.of(context).pushNamed('/profile');
-              },
-            ),
-            ListTile(
-              title: Text('Localizar Hemocentro'),
-              onTap: () {
-                MapsLauncher.launchQuery('doar sangue');
-              },
-            ),
-            ListTile(
-              title: Text('Sobre a doação'),
-              onTap: () {
-                Navigator.of(context).pushNamed('/about');
-              },
-            ),
-          ],
-        ),
+        child: ListView.builder(
+            padding: EdgeInsets.zero,
+            itemCount: usuarios.length,
+            itemBuilder: (_, index) {
+              final usuario = Usuario.fromMap(usuarios[index]);
+              return Column(
+                children: [
+                  UserAccountsDrawerHeader(
+                    decoration: BoxDecoration(
+                      color: Color.fromARGB(171, 185, 47, 47),
+                    ),
+                    currentAccountPicture: CircleAvatar(
+                      backgroundImage: NetworkImage(
+                        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXA-Uu5DzOUC3DEEh789elx46nvfe-0s-7xg&usqp=CAU",
+                      ),
+                    ),
+                    accountName: Text('${usuario.nomeUsuario}'), //user data
+                    accountEmail: Text('${usuario.email}'), //user data
+                  ),
+                  ListTile(
+                    title: Text('Meu perfil'),
+                    onTap: () {
+                      Navigator.of(context).pushNamed('/profile');
+                    },
+                  ),
+                  ListTile(
+                    title: Text('Localizar Hemocentro'),
+                    onTap: () {
+                      MapsLauncher.launchQuery('doar sangue');
+                    },
+                  ),
+                  ListTile(
+                    title: Text('Sobre a doação'),
+                    onTap: () {
+                      Navigator.of(context).pushNamed('/about');
+                    },
+                  ),
+                ],
+              );
+            }),
       ),
     );
   }
