@@ -2,6 +2,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables
 
 import 'package:doe_sangue/controller/usuario.controller.dart';
+import 'package:doe_sangue/views/android/profile.page.dart';
 import 'package:maps_launcher/maps_launcher.dart';
 import 'package:doe_sangue/views/android/widgets/campanha.card.dart';
 import 'package:doe_sangue/views/android/widgets/resumo.card.dart';
@@ -134,7 +135,7 @@ class _TabbedHomeState extends State<TabbedHome>
             padding: EdgeInsets.zero,
             itemCount: usuarios.length,
             itemBuilder: (_, index) {
-              final usuario = Usuario.fromMap(usuarios[index]);
+              var usuario = Usuario.fromMap(usuarios[index]);
               return Column(
                 children: [
                   UserAccountsDrawerHeader(
@@ -152,7 +153,12 @@ class _TabbedHomeState extends State<TabbedHome>
                   ListTile(
                     title: Text('Meu perfil'),
                     onTap: () {
-                      Navigator.of(context).pushNamed('/profile');
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ProfilePage(),
+                        ),
+                      );
                     },
                   ),
                   ListTile(

@@ -200,37 +200,6 @@ class _SignupPageState extends State<SignupPage> {
               const SizedBox(
                 height: 10,
               ),
-
-              /*TextFormField(                
-                controller: dateinput,
-                decoration: const InputDecoration( 
-                    icon: Icon(Icons.calendar_today),
-                    labelText: "Data da última doação" 
-                    ),
-                readOnly: true,
-                onTap: () async {
-                  DateTime? pickedDate = await showDatePicker(
-                      context: context, 
-                      initialDate: DateTime.now(),
-                      firstDate: DateTime(1950), 
-                      lastDate: DateTime.now(),
-                  );
-      
-                if(pickedDate != null ){                     
-                      String value = DateFormat('dd/MM/yyyy').format(pickedDate);                      
-                    setState(() {
-                      dateinput.text = value;
-                      }
-                    );                
-                  }
-                },
-                onSaved: (value) => ultimaDoacao = value as DateTime?,
-              ),
-      
-              const SizedBox(
-                height: 10,
-                ),*/
-
               TextFormField(
                 keyboardType: TextInputType.text,
                 obscureText: true,

@@ -39,7 +39,12 @@ class UsuarioController {
     }  
   }
 
-  void update(Usuario usuario) {}
+  Future<void> updateUser(int? id, String? email, String? telefone) async {
+    var db = await DatabaseHandler.instance.database;
+    await db.rawQuery("""UPDATE usuarios
+          SET email = '$email', telefone = '$telefone'
+          WHERE idUsuario == $id;""");
+  }
 
   void delete(Usuario usuario) {}
 }

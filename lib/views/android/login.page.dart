@@ -3,6 +3,7 @@ import 'package:doe_sangue/views/android/TabbedHome.page.dart';
 import 'package:doe_sangue/views/android/resetPassword.page.dart';
 import 'package:doe_sangue/views/android/signup.page.dart';
 import 'package:doe_sangue/models/usuario.dart';
+import 'package:doe_sangue/controller/helper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 
@@ -23,6 +24,12 @@ class _LoginPageState extends State<LoginPage> {
     String senha = _conSenha.text;
     var usuarioController = UsuarioController();
 
+    if (email.isEmpty) {
+      alertDialog(context, "Por favor, infome o email");
+    } else if (senha.isEmpty) {
+      alertDialog(context, "Por favor, infome a senha");
+    } else {
+
       await usuarioController.loginUser(email, senha).then((usuario) {
         if (usuario != null) {
           setSP(usuario).whenComplete(() {
@@ -31,8 +38,11 @@ class _LoginPageState extends State<LoginPage> {
                 MaterialPageRoute(builder: (_) => const TabbedHome()),
                 (Route<dynamic> route) => false);
           });
-        } 
-      });    
+        } else {
+          alertDialog(context, "Usuario ou senha inválidos");
+        }
+      });
+    }    
   }
 
   Future setSP(Usuario usuario) async {
@@ -41,10 +51,6 @@ class _LoginPageState extends State<LoginPage> {
     sp.setString("nomeUsuario", usuario.nomeUsuario!);
     sp.setString("email", usuario.email!);
     sp.setInt("idUsuario", usuario.idUsuario!);
-
-    print('${usuario.nomeUsuario}');
-    print('${usuario.email}');
-    print('${usuario.idUsuario}');
     }
   
 

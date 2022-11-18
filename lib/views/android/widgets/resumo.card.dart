@@ -22,8 +22,6 @@ class _ResumoCardState extends State<ResumoCard> {
   final usuarioController = UsuarioController();
   List<Map> usuarios = [];
 
-  //var id = 2;
-
   @override
   void initState() {
     fetchUsers();
@@ -51,7 +49,7 @@ class _ResumoCardState extends State<ResumoCard> {
               itemCount: usuarios.length,
               itemBuilder: (_, index) {
            
-                final usuario = Usuario.fromMap(usuarios[index]);
+                var usuario = Usuario.fromMap(usuarios[index]);
                 return SizedBox(
                   height: MediaQuery.of(context).size.height - 250,
                   child: Column(
