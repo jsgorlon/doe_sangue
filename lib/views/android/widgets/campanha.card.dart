@@ -1,7 +1,15 @@
 import 'package:doe_sangue/controller/campanha.controller.dart';
+import 'package:doe_sangue/controller/doacao.controller.dart';
+import 'package:doe_sangue/controller/usuario.controller.dart';
 import 'package:doe_sangue/models/campanha.dart';
+import 'package:doe_sangue/models/doacao.dart';
+import 'package:doe_sangue/models/usuario.dart';
 import 'package:doe_sangue/services/location.service.dart';
+import 'package:doe_sangue/views/android/widgets/donation.confirmation.dialong.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:maps_launcher/maps_launcher.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CampanhaCard extends StatefulWidget {
   late TabController tabController;
@@ -14,28 +22,54 @@ class CampanhaCard extends StatefulWidget {
 
 class _CampanhaCardState extends State<CampanhaCard> {
   final campanhaController = CampanhaController();
-  Future<List<Map>>? campanhas;
   final LocationServices locator = LocationServices();
+  final DoacaoController doacaoController = DoacaoController();
+  final UsuarioController usuarioController = UsuarioController();
+
+  String? currentCity;
+  Future<List<Map>>? campanhas;
+  List<Usuario> usuarios = [];
+  Usuario? sessionUser;
 
   @override
   void initState() {
     campanhas = campanhaController.read();
+    getLocation();
+    fetchUsers();
     super.initState();
+  }
+
+  void getLocation() async {
+    await locator.getCurrentLocation();
+    setState(() {
+      currentCity = locator.city;
+    });
   }
 
   Future<void> _refresh() {
     setState(() {
       campanhas = campanhaController.read();
-      _testState();
     });
     return Future.delayed(
       Duration(seconds: 1),
     );
   }
 
-  void _testState() async {
-    await locator.getCurrentLocation();
-    print(locator.currentAddress);
+  void fetchUsers() async {
+    SharedPreferences sp = await SharedPreferences.getInstance();
+    int id = sp.getInt("idUsuario")!;
+    usuarios = [];
+    sessionUser = null;
+
+    var results = await usuarioController.readById(id);
+    usuarios = results
+        .map(
+          (e) => Usuario.fromMap(e),
+        )
+        .toList();
+    setState(() {
+      sessionUser = usuarios.first;
+    });
   }
 
   @override
@@ -57,6 +91,7 @@ class _CampanhaCardState extends State<CampanhaCard> {
               itemBuilder: (_, index) {
                 var campanhas = snapshot.data!;
                 final campanha = Campanha.fromMap(campanhas[index]);
+                getLocation();
                 return Align(
                   child: SizedBox(
                     width: MediaQuery.of(context).size.width - 20,
@@ -117,38 +152,41 @@ class _CampanhaCardState extends State<CampanhaCard> {
               Text('Tipo: ${campanha.tipoSanguineo}'),
             ],
           ),
-          ElevatedButton(
-            child: const Text('Registrar Doação'),
-            style: ElevatedButton.styleFrom(primary: Colors.redAccent),
-            onPressed: () => showDialog<String>(
-                context: context,
-                builder: (BuildContext context) =>
-                    _donationConfirmation(context)),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              ElevatedButton(
+                  style: ElevatedButton.styleFrom(primary: Colors.redAccent),
+                  onPressed: (() {
+                    MapsLauncher.launchQuery(campanha.local!.toMapsQuery());
+                  }),
+                  child: const Text("Abrir Mapa")),
+              Visibility(
+                visible: (currentCity == campanha.local!.cidade!.nomeCidade)
+                    ? true
+                    : false,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(primary: Colors.redAccent),
+                  onPressed: () => showDialog<String>(
+                    context: context,
+                    builder: (BuildContext context) =>
+                        DonationConfirmationDialog(
+                      sessionUser: sessionUser!,
+                      campanha: campanha,
+                      ifSuccessAction: doacaoController.create,
+                      actionParam:
+                          Doacao(usuario: sessionUser!, campanha: campanha),
+                    ),
+                  ).then((value) {
+                    _refresh();
+                  }),
+                  child: const Text('Registrar Doação'),
+                ),
+              )
+            ],
           )
         ],
       ),
-    );
-  }
-
-  AlertDialog _donationConfirmation(BuildContext context) {
-    return AlertDialog(
-      title: const Text('Confirmar doação?'),
-      content: const Text(
-          textAlign: TextAlign.justify,
-          'Uma vez confirmada, você só podera doar novamente após o perídodo de recuperação'),
-      actions: <Widget>[
-        TextButton(
-          onPressed: () => Navigator.pop(context),
-          child: const Text('Cancelar'),
-        ),
-        TextButton(
-          onPressed: () {
-            Navigator.pop(context);
-            widget.tabController.animateTo(0);
-          },
-          child: const Text('Confirmar'),
-        ),
-      ],
     );
   }
 }

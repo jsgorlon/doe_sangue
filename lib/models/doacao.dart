@@ -3,17 +3,21 @@ import 'package:doe_sangue/models/localColeta.dart';
 import 'package:doe_sangue/models/usuario.dart';
 
 class Doacao {
-  int? idDoacao;
-  Usuario? doador;
+  Usuario usuario;
   Campanha? campanha;
   LocalColeta? local;
-  DateTime? dataDoacao;
 
   Doacao({
-    this.idDoacao,
-    this.doador,
-    this.campanha,
+    required this.usuario,
     this.local,
-    this.dataDoacao,
+    this.campanha,
   });
+
+  toMap() {
+    return {
+      'idDoador': usuario.idUsuario,
+      'idCampanha': campanha?.idCampanha,
+      'idLocal': local?.idLocal ?? campanha?.local?.idLocal,
+    };
+  }
 }

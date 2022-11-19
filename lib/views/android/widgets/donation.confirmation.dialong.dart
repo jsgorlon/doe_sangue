@@ -1,24 +1,27 @@
+import 'package:doe_sangue/models/campanha.dart';
 import 'package:doe_sangue/models/usuario.dart';
+import 'package:doe_sangue/views/android/TabbedHome.page.dart';
 import 'package:flutter/material.dart';
 
 class DonationConfirmationDialog extends StatelessWidget {
-  Usuario? usuario; //derá ser o usuário da seesão para as verificações
-  Function confirmAction;
+  Usuario sessionUser;
+  Function ifSuccessAction;
   var actionParam;
-  bool toHome;
+  Campanha? campanha;
+
   DonationConfirmationDialog(
       {super.key,
-      this.usuario,
-      required this.confirmAction,
+      required this.sessionUser,
+      required this.ifSuccessAction,
       required this.actionParam,
-      this.toHome = true});
+      this.campanha});
 
   @override
   Widget build(BuildContext context) {
-    if (usuario!.daysToNestDonation() > 0 || !usuario!.canDonateByAge()) {
-      String alterta = (!usuario!.canDonateByAge())
+    if (sessionUser.daysToNestDonation() > 0 || !sessionUser.canDonateByAge()) {
+      String alterta = (!sessionUser.canDonateByAge())
           ? 'Você está fora da idade permitida para doação'
-          : 'Ainda faltam ${usuario!.daysToNestDonation()} dias para sua próxima doação';
+          : 'Ainda faltam ${sessionUser.daysToNestDonation()} dias para sua próxima doação';
       return AlertDialog(
         title: const Text(
           'Não é possível realizar a doação',
@@ -44,6 +47,32 @@ class DonationConfirmationDialog extends StatelessWidget {
           ),
         ],
       );
+    } else if (campanha != null &&
+        !__isBloodCompatible(sessionUser, campanha!)) {
+      return AlertDialog(
+        title: const Text(
+          'Tipo sanguíneo não compatível',
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        content: const Text(
+            textAlign: TextAlign.justify,
+            'Tipo sanguíneo não é compatível com esta campanha'),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text(
+              'Cancelar',
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ],
+      );
     } else {
       return AlertDialog(
         title: const Text(
@@ -58,7 +87,9 @@ class DonationConfirmationDialog extends StatelessWidget {
             'Uma vez confirmada, você só podera doar novamente após o perídodo de recuperação'),
         actions: <Widget>[
           TextButton(
-            onPressed: () => Navigator.pop(context),
+            onPressed: (() {
+              Navigator.pop(context);
+            }),
             child: const Text(
               'Cancelar',
               style: TextStyle(
@@ -70,7 +101,7 @@ class DonationConfirmationDialog extends StatelessWidget {
           TextButton(
             style: TextButton.styleFrom(backgroundColor: Colors.redAccent),
             onPressed: () {
-              confirmAction(actionParam);
+              ifSuccessAction(actionParam);
               Navigator.pop(context);
             },
             child: const Text(
@@ -84,6 +115,25 @@ class DonationConfirmationDialog extends StatelessWidget {
         ],
       );
     }
-    ;
+  }
+
+  bool __isBloodCompatible(Usuario sessionUser, Campanha campaign) {
+    if (sessionUser.tipoSanguineo!.startsWith('A') &&
+        !campaign.tipoSanguineo!.startsWith('A')) {
+      return false;
+    }
+    if (sessionUser.tipoSanguineo!.contains('B') &&
+        !campaign.tipoSanguineo!.contains('B')) {
+      return false;
+    }
+    if (sessionUser.tipoSanguineo!.startsWith('AB') &&
+        !campaign.tipoSanguineo!.startsWith('AB')) {
+      return false;
+    }
+    if (sessionUser.tipoSanguineo!.contains('+') &&
+        !campaign.tipoSanguineo!.contains('-')) {
+      return false;
+    }
+    return true;
   }
 }

@@ -4,7 +4,6 @@ import 'package:geocoding/geocoding.dart';
 class LocationServices {
   Position? currentPosition;
   Placemark? place;
-  Map? currentAddress;
   String? city;
   String? state;
 
@@ -40,10 +39,12 @@ class LocationServices {
 
   _getAddressFromLatLng() async {
     try {
-      List<Placemark> placemarks = await placemarkFromCoordinates(
-          currentPosition!.latitude, currentPosition!.longitude);
-      place = placemarks[0];
-      currentAddress = place!.toJson();
+      await placemarkFromCoordinates(
+              currentPosition!.latitude, currentPosition!.longitude)
+          .then((value) {
+        place = value[0];
+        city = place?.subAdministrativeArea;
+      });
     } catch (e) {
       print(e);
     }

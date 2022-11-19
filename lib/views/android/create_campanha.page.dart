@@ -1,11 +1,17 @@
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:doe_sangue/controller/campanha.controller.dart';
 import 'package:doe_sangue/controller/local_coleta.controller.dart';
+import 'package:doe_sangue/models/campanha.dart';
 import 'package:doe_sangue/models/cidade.dart';
 import 'package:doe_sangue/models/estado.dart';
 import 'package:doe_sangue/models/localColeta.dart';
+import 'package:doe_sangue/models/usuario.dart';
+import 'package:doe_sangue/views/android/TabbedHome.page.dart';
 import 'package:flutter/material.dart';
 
 class CreateCampanha extends StatefulWidget {
-  const CreateCampanha({super.key});
+  Usuario? sessionUser;
+  CreateCampanha({this.sessionUser, super.key});
 
   @override
   State<CreateCampanha> createState() => _CreateCampanhaState();
@@ -13,8 +19,8 @@ class CreateCampanha extends StatefulWidget {
 
 class _CreateCampanhaState extends State<CreateCampanha> {
   final localController = LocalColetaController();
+  final campanhaController = CampanhaController();
   bool hasReceptor = false;
-  String? organizador; //Será o usuário do aplicativo
   String? receptor;
   String? tipoSanguineo;
   int? qtdBolsasSolicitadas;
@@ -100,9 +106,9 @@ class _CreateCampanhaState extends State<CreateCampanha> {
               });
             },
           ),
-          const Text(
+          const AutoSizeText(
             "As doações serão para outra pessoa",
-            style: TextStyle(fontSize: 18),
+            maxFontSize: 18,
           ),
         ],
       );
@@ -161,7 +167,10 @@ class _CreateCampanhaState extends State<CreateCampanha> {
             child: Container(
               margin: const EdgeInsets.only(bottom: 15),
               child: TextFormField(
-                enabled: hasReceptor,
+                keyboardType: TextInputType.name,
+                onChanged: (value) {
+                  receptor = value;
+                },
                 decoration: const InputDecoration(
                   prefixIcon: Icon(
                     Icons.person_add_alt_1_sharp,
@@ -234,11 +243,11 @@ class _CreateCampanhaState extends State<CreateCampanha> {
         border: OutlineInputBorder(),
       ),
       value: (selectedCity == null)
-          ? cidades!.first
-          : (cidades!.firstWhere(
+          ? cidades.first
+          : (cidades.firstWhere(
               (Cidade cidade) => cidade.idCidade == selectedCity!.idCidade)),
       items: cidades.isNotEmpty
-          ? cidades!.map<DropdownMenuItem<Cidade>>((Cidade cidade) {
+          ? cidades.map<DropdownMenuItem<Cidade>>((Cidade cidade) {
               return DropdownMenuItem<Cidade>(
                 value: cidade,
                 child: Text("${cidade.nomeCidade}"),
@@ -263,11 +272,11 @@ class _CreateCampanhaState extends State<CreateCampanha> {
         border: OutlineInputBorder(),
       ),
       value: (selectedLocal == null)
-          ? locaisColeta!.first
-          : (locaisColeta!.firstWhere(
+          ? locaisColeta.first
+          : (locaisColeta.firstWhere(
               (LocalColeta local) => local.idLocal == selectedLocal!.idLocal)),
       items: locaisColeta.isNotEmpty
-          ? locaisColeta!
+          ? locaisColeta
               .map<DropdownMenuItem<LocalColeta>>((LocalColeta local) {
               return DropdownMenuItem<LocalColeta>(
                 value: local,
@@ -325,11 +334,15 @@ class _CreateCampanhaState extends State<CreateCampanha> {
                       ),
                     ),
                     onPressed: () {
-                      print(receptor);
-                      print(selectedLocal?.nomeLocal);
-                      print(selectedLocal?.idLocal);
-                      print(qtdBolsasSolicitadas);
-                      print(tipoSanguineo);
+                      Campanha campanha = Campanha(
+                          organizador: widget.sessionUser,
+                          nomeReceptor: receptor,
+                          local: selectedLocal,
+                          qtdSolicitada: qtdBolsasSolicitadas,
+                          tipoSanguineo: tipoSanguineo ??
+                              widget.sessionUser?.tipoSanguineo);
+                      campanhaController.create(campanha);
+                      Navigator.pop(context);
                     },
                     child: const Text(
                       'Confirmar',

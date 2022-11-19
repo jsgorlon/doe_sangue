@@ -38,15 +38,11 @@ class Campanha {
 
   Map<String, dynamic> toMap() {
     return {
-      'idCampanha': idCampanha,
-      'organizador': organizador,
+      'idCriador': organizador!.idUsuario,
       'nomeReceptor': nomeReceptor,
-      'tipoSanguineo': tipoSanguineo,
+      'tipoSanguineo': tipoSanguineo ?? organizador!.tipoSanguineo,
       'qtdSolicitada': qtdSolicitada,
-      'qtdDoada': qtdDoada,
-      'local': local,
-      'dataInicio': dataInicio,
-      'ativa': ativa! ? true : false,
+      'idLocal': local!.idLocal,
     };
   }
 }

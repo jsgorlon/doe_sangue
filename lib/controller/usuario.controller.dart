@@ -10,7 +10,8 @@ class UsuarioController {
 
   Future<List<Map>> readById(int id) async {
     var db = await DatabaseHandler.instance.database;
-    List<Map> usuario = await db.rawQuery("""SELECT user.nomeUsuario, user.sexo,
+    List<Map> usuario =
+        await db.rawQuery("""SELECT user.idUsuario, user.nomeUsuario, user.sexo,
               user.dataNascimento, user.email, user.telefone, user.tipoSanguineo,
               user.ativo, user.dataCadastro, COUNT(d.idDoador) AS totalDoacoes, 
               COUNT(d.idCampanha) as campParticipadas, COUNT(camp.idCriador) AS totalCampanhas,
@@ -29,14 +30,14 @@ class UsuarioController {
 
   Future<Usuario?> loginUser(String Email, String Senha) async {
     var db = await DatabaseHandler.instance.database;
-    var usuario = await db.rawQuery(""" SELECT * FROM usuarios WHERE email = '$Email' AND senha = '$Senha';""");
+    var usuario = await db.rawQuery(
+        """ SELECT * FROM usuarios WHERE email = '$Email' AND senha = '$Senha';""");
 
     if (usuario.isNotEmpty) {
       return Usuario.fromMap(usuario.first);
+    } else {
+      return null;
     }
-    else{
-      return null;  
-    }  
   }
 
   Future<void> updateUser(int? id, String? email, String? telefone) async {

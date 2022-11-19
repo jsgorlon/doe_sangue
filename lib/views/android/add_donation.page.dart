@@ -1,13 +1,17 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:doe_sangue/controller/doacao.controller.dart';
 import 'package:doe_sangue/controller/local_coleta.controller.dart';
+import 'package:doe_sangue/controller/usuario.controller.dart';
+import 'package:doe_sangue/models/doacao.dart';
 import 'package:doe_sangue/models/localColeta.dart';
 import 'package:doe_sangue/models/usuario.dart';
 import 'package:doe_sangue/views/android/widgets/donation.confirmation.dialong.dart';
 import 'package:flutter/material.dart';
 import 'package:maps_launcher/maps_launcher.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AutonomusDonation extends StatefulWidget {
-  Usuario sessionUser; //deverá ser feito de forma global
+  Usuario sessionUser;
   AutonomusDonation(this.sessionUser, {super.key});
 
   @override
@@ -16,12 +20,11 @@ class AutonomusDonation extends StatefulWidget {
 
 class _AutonomusDonationState extends State<AutonomusDonation> {
   LocalColetaController localColetaController = LocalColetaController();
+  UsuarioController usuarioController = UsuarioController();
+  DoacaoController doacaoController = DoacaoController();
   Future<List<Map>>? dadosLocais;
   List<LocalColeta>? locais;
   LocalColeta? selectedLocal;
-  Map? currentLocation;
-  String? currentCity;
-  String? currentState;
 
   @override
   void initState() {
@@ -73,12 +76,12 @@ class _AutonomusDonationState extends State<AutonomusDonation> {
                       context: context,
                       builder: (BuildContext context) =>
                           DonationConfirmationDialog(
-                        usuario: widget.sessionUser,
-                        toHome: true,
-                        confirmAction: print,
-                        actionParam: "Cadastrado",
+                        sessionUser: widget.sessionUser,
+                        ifSuccessAction: doacaoController.create,
+                        actionParam: Doacao(
+                            usuario: widget.sessionUser, local: selectedLocal!),
                       ),
-                    ),
+                    ).then((_) => Navigator.pop(context)),
                     style: TextButton.styleFrom(
                       foregroundColor: Colors.black,
                       backgroundColor: Colors.redAccent,
@@ -141,7 +144,6 @@ class _AutonomusDonationState extends State<AutonomusDonation> {
           onChanged: (local) {
             setState(() {
               selectedLocal = local;
-              print(local?.nomeLocal);
             });
           },
         );

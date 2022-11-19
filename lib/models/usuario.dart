@@ -16,14 +16,14 @@ class Usuario {
   int? campParticipadas;
   DateTime? ultimaDoacao;
 
-  Usuario(
+  Usuario({
     this.nomeUsuario,
     this.sexo,
     this.dataNascimento,
     this.email,
     this.telefone,
     this.tipoSanguineo,
-    this.senha, {
+    this.senha,
     this.ativo,
     this.dataCadastro,
     this.totalDoacoes = 0,

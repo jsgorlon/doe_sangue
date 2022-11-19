@@ -34,8 +34,14 @@ class _SignupPageState extends State<SignupPage> {
   void save(BuildContext context) async {
     formKey.currentState!.save();
     var usuarioController = UsuarioController();
-    usuarioController.create(Usuario(nomeUsuario, sexo, dataNascimento, email,
-        telefone, tipoSanguineo, senha));
+    usuarioController.create(Usuario(
+        nomeUsuario: nomeUsuario,
+        sexo: sexo,
+        dataNascimento: dataNascimento,
+        email: email,
+        telefone: telefone,
+        tipoSanguineo: tipoSanguineo,
+        senha: senha));
     Navigator.of(context).pop();
   }
 
