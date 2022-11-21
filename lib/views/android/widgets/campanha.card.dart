@@ -178,7 +178,7 @@ class _CampanhaCardState extends State<CampanhaCard> {
                           Doacao(usuario: sessionUser!, campanha: campanha),
                     ),
                   ).then((value) {
-                    _refresh();
+                    widget.tabController.animateTo(0);
                   }),
                   child: const Text('Registrar Doação'),
                 ),

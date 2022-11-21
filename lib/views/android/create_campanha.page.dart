@@ -44,7 +44,7 @@ class _CreateCampanhaState extends State<CreateCampanha> {
     "O-"
   ];
 
-  final formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -85,11 +85,6 @@ class _CreateCampanhaState extends State<CreateCampanha> {
     });
   }
 
-  Widget createButton() => ElevatedButton(
-        onPressed: () => Navigator.of(context).pop(),
-        child: const Text("Criar"),
-      );
-
   Widget checkBox() => Row(
         children: [
           Checkbox(
@@ -129,8 +124,12 @@ class _CreateCampanhaState extends State<CreateCampanha> {
                 border: OutlineInputBorder(),
               ),
               validator: ((qtdBolsas) {
-                if (qtdBolsas == null || qtdBolsas.isEmpty) {
+                if (qtdBolsas == null ||
+                    qtdBolsas.isEmpty ||
+                    int.parse(qtdBolsas) <= 0) {
                   return 'Valor obrigatório';
+                } else {
+                  return null;
                 }
               }),
               onChanged: (qtdBolsas) {
@@ -167,6 +166,13 @@ class _CreateCampanhaState extends State<CreateCampanha> {
             child: Container(
               margin: const EdgeInsets.only(bottom: 15),
               child: TextFormField(
+                validator: ((value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Informe o nome do receptor das doações';
+                  } else {
+                    return null;
+                  }
+                }),
                 keyboardType: TextInputType.name,
                 onChanged: (value) {
                   receptor = value;
@@ -296,7 +302,7 @@ class _CreateCampanhaState extends State<CreateCampanha> {
       ),
       body: SingleChildScrollView(
         child: Form(
-          key: formKey,
+          key: _formKey,
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 15),
             child: Column(
@@ -334,15 +340,17 @@ class _CreateCampanhaState extends State<CreateCampanha> {
                       ),
                     ),
                     onPressed: () {
-                      Campanha campanha = Campanha(
-                          organizador: widget.sessionUser,
-                          nomeReceptor: receptor,
-                          local: selectedLocal,
-                          qtdSolicitada: qtdBolsasSolicitadas,
-                          tipoSanguineo: tipoSanguineo ??
-                              widget.sessionUser?.tipoSanguineo);
-                      campanhaController.create(campanha);
-                      Navigator.pop(context);
+                      if (_formKey.currentState!.validate()) {
+                        Campanha campanha = Campanha(
+                            organizador: widget.sessionUser,
+                            nomeReceptor: receptor,
+                            local: selectedLocal,
+                            qtdSolicitada: qtdBolsasSolicitadas,
+                            tipoSanguineo: tipoSanguineo ??
+                                widget.sessionUser?.tipoSanguineo);
+                        campanhaController.create(campanha);
+                        Navigator.pop(context);
+                      }
                     },
                     child: const Text(
                       'Confirmar',
