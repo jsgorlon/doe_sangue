@@ -131,7 +131,7 @@ class DonationConfirmationDialog extends StatelessWidget {
       return false;
     }
     if (sessionUser.tipoSanguineo!.contains('+') &&
-        !campaign.tipoSanguineo!.contains('-')) {
+        campaign.tipoSanguineo!.contains('-')) {
       return false;
     }
     return true;
