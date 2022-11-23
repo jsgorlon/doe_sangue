@@ -11,15 +11,24 @@ class UsuarioController {
   Future<List<Map>> readById(int id) async {
     var db = await DatabaseHandler.instance.database;
     List<Map> usuario =
-        await db.rawQuery("""SELECT user.idUsuario, user.nomeUsuario, user.sexo,
-              user.dataNascimento, user.email, user.telefone, user.tipoSanguineo,
-              user.ativo, user.dataCadastro, COUNT(d.idDoador) AS totalDoacoes, 
-              COUNT(d.idCampanha) as campParticipadas, COUNT(camp.idCriador) AS totalCampanhas,
-              max(d.dataDoacao) as ultimaDoacao
-              FROM usuarios as user
-              LEFT JOIN campanhas as camp on camp.idCriador == user.idUsuario
-              LEFT JOIN doacoes as d on user.idUsuario == d.idDoador
-              WHERE idUsuario == $id;""");
+        await db.rawQuery("""SELECT usuarios.idUsuario, usuarios.nomeUsuario, usuarios.sexo,
+              usuarios.dataNascimento, usuarios.email, usuarios.telefone, usuarios.tipoSanguineo,
+              usuarios.ativo, usuarios.dataCadastro, 
+
+              (SELECT COUNT(d.idDoador) FROM doacoes as d
+              WHERE idDoador = '$id') AS totalDoacoes,
+
+              (SELECT COUNT(d.idCampanha) FROM doacoes as d
+              WHERE idDoador = '$id') AS campParticipadas,
+
+              (SELECT COUNT(camp.idCriador) FROM campanhas as camp
+              WHERE idCriador = '$id') AS totalCampanhas,
+
+              (SELECT max(d.dataDoacao) as ultimaDoacao FROM doacoes as d
+              WHERE idDoador = '$id') AS ultimaDoacao              
+
+              FROM usuarios
+              WHERE idUsuario = '$id';""");
     return usuario;
   }
 

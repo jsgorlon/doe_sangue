@@ -125,7 +125,7 @@ class _CampanhaCardState extends State<CampanhaCard> {
         Text(
             'Receptor: ${campanha.nomeReceptor ?? campanha.organizador!.nomeUsuario!}'),
         Text(
-            'Cidade: ${campanha.local?.cidade?.nomeCidade}/${campanha.local?.cidade?.estado?.nomeEstado}')
+            'Cidade: ${campanha.local?.cidade?.nomeCidade}/${campanha.local?.cidade?.estado?.siglaUF}')
       ],
     );
   }
@@ -153,14 +153,8 @@ class _CampanhaCardState extends State<CampanhaCard> {
             ],
           ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              ElevatedButton(
-                  style: ElevatedButton.styleFrom(primary: Colors.redAccent),
-                  onPressed: (() {
-                    MapsLauncher.launchQuery(campanha.local!.toMapsQuery());
-                  }),
-                  child: const Text("Abrir Mapa")),
               Visibility(
                 visible: (currentCity == campanha.local!.cidade!.nomeCidade)
                     ? true
@@ -182,7 +176,13 @@ class _CampanhaCardState extends State<CampanhaCard> {
                   }),
                   child: const Text('Registrar Doação'),
                 ),
-              )
+              ),
+              ElevatedButton(
+                  style: ElevatedButton.styleFrom(primary: Colors.redAccent),
+                  onPressed: (() {
+                    MapsLauncher.launchQuery(campanha.local!.toMapsQuery());
+                  }),
+                  child: const Text("Abrir Mapa")),
             ],
           )
         ],

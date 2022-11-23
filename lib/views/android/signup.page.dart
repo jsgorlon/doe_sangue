@@ -1,5 +1,6 @@
 // ignore_for_file: use_key_in_widget_constructors
 
+import 'package:doe_sangue/controller/helper.dart';
 import 'package:doe_sangue/controller/usuario.controller.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -73,6 +74,9 @@ class _SignupPageState extends State<SignupPage> {
           child: ListView(
             children: <Widget>[
               TextFormField(
+                onChanged: (name) {
+                  nomeUsuario = name;
+                },
                 keyboardType: TextInputType.text,
                 decoration: const InputDecoration(
                   icon: Icon(Icons.person),
@@ -112,7 +116,7 @@ class _SignupPageState extends State<SignupPage> {
                     });
                   }
                 },
-                onSaved: (date) => stringToData(date!),
+                onSaved: (date) => stringToData(date!),                
               ),
               const SizedBox(
                 height: 10,
@@ -133,13 +137,18 @@ class _SignupPageState extends State<SignupPage> {
                     ),
                   );
                 }).toList(),
-                onChanged: (String? gender) {},
+                onChanged: (gender) {
+                  sexo = gender;
+                },
                 onSaved: (gender) => sexo = gender,
               ),
               const SizedBox(
                 height: 10,
               ),
               TextFormField(
+                onChanged: (adress) {
+                  email = adress;
+                },
                 keyboardType: TextInputType.emailAddress,
                 decoration: const InputDecoration(
                   icon: Icon(Icons.email),
@@ -158,6 +167,9 @@ class _SignupPageState extends State<SignupPage> {
                 height: 10,
               ),
               TextFormField(
+                onChanged: (phone) {
+                  telefone = phone;
+                },
                 inputFormatters: [maskFormatterPhone],
                 keyboardType: TextInputType.phone,
                 decoration: const InputDecoration(
@@ -200,13 +212,18 @@ class _SignupPageState extends State<SignupPage> {
                     ),
                   );
                 }).toList(),
-                onChanged: (String? value) {},
+                onChanged: (type) {
+                  tipoSanguineo = type;
+                },
                 onSaved: (type) => tipoSanguineo = type,
               ),
               const SizedBox(
                 height: 10,
               ),
               TextFormField(
+                onChanged: (password) {
+                  senha = password;
+                },
                 keyboardType: TextInputType.text,
                 obscureText: true,
                 decoration: const InputDecoration(
@@ -243,7 +260,26 @@ class _SignupPageState extends State<SignupPage> {
                       ),
                       textAlign: TextAlign.center,
                     ),
-                    onPressed: () => save(context),
+                    onPressed: () {
+                      if (nomeUsuario == null) {
+                        alertDialog(context, 'Por favor, informe seu nome!');
+                      } else if (sexo == null) {
+                        alertDialog(context, 'Por favor, informe seu gênero!');
+                      } else if (email == null) {
+                        alertDialog(context, 'Por favor, informe seu email!');
+                      } else if (telefone == null) {
+                        alertDialog(
+                            context, 'Por favor, informe seu telefone!');
+                      } else if (tipoSanguineo == null) {
+                        alertDialog(
+                            context, 'Por favor, informe seu tipo sanguíneo!');
+                      } else if (senha == null) {
+                        alertDialog(context, 'Por favor, defina uma senha!');
+                      } else {
+                        save(context);
+                        alertDialog(context, 'Cadastro realizado com sucesso!');
+                      }
+                    },
                   ),
                 ),
               ),

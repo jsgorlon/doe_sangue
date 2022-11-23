@@ -113,7 +113,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                         child: Column(
                                           children: <Widget>[
                                             AutoSizeText(
-                                              "Gênero",
+                                              "Sexo",
                                               maxLines: 1,
                                               group: myGroupTitle,
                                               style: TextStyle(
