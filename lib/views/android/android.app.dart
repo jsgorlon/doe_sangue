@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:doe_sangue/views/android/TabbedHome.page.dart';
+import 'package:doe_sangue/views/android/tabbedHome.page.dart';
 import 'package:doe_sangue/views/android/login.page.dart';
 import 'package:doe_sangue/views/android/profile.page.dart';
 import 'package:doe_sangue/views/android/create_campanha.page.dart';

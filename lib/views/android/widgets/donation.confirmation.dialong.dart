@@ -1,9 +1,10 @@
+import 'package:doe_sangue/controller/campanha.controller.dart';
 import 'package:doe_sangue/models/campanha.dart';
 import 'package:doe_sangue/models/usuario.dart';
-import 'package:doe_sangue/views/android/TabbedHome.page.dart';
 import 'package:flutter/material.dart';
 
 class DonationConfirmationDialog extends StatelessWidget {
+  final CampanhaController campanhaController = CampanhaController();
   Usuario sessionUser;
   Function ifSuccessAction;
   var actionParam;
@@ -73,6 +74,33 @@ class DonationConfirmationDialog extends StatelessWidget {
           ),
         ],
       );
+    } else if (campanha != null &&
+        sessionUser.idUsuario == campanha!.organizador!.idUsuario &&
+        campanha!.nomeReceptor == null) {
+      return AlertDialog(
+        title: const Text(
+          'Doação inválida!',
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        content: const Text(
+            textAlign: TextAlign.justify,
+            'Você não pode doar para uma campanha onde você é o receptor.'),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text(
+              'Cancelar',
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ],
+      );
     } else {
       return AlertDialog(
         title: const Text(
@@ -102,6 +130,11 @@ class DonationConfirmationDialog extends StatelessWidget {
             style: TextButton.styleFrom(backgroundColor: Colors.redAccent),
             onPressed: () {
               ifSuccessAction(actionParam);
+              if (campanha != null) {
+                if (campanha!.qtdDoada! + 1 == campanha!.qtdSolicitada) {
+                  campanhaController.updateState(campanha!.idCampanha!);
+                }
+              }
               Navigator.pop(context);
             },
             child: const Text(

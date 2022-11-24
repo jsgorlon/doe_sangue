@@ -6,7 +6,6 @@ import 'package:doe_sangue/models/cidade.dart';
 import 'package:doe_sangue/models/estado.dart';
 import 'package:doe_sangue/models/localColeta.dart';
 import 'package:doe_sangue/models/usuario.dart';
-import 'package:doe_sangue/views/android/TabbedHome.page.dart';
 import 'package:flutter/material.dart';
 
 class CreateCampanha extends StatefulWidget {

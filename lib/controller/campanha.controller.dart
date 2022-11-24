@@ -5,8 +5,8 @@ import 'package:sqflite/sqflite.dart';
 class CampanhaController {
   Future<List<Map>> read() async {
     Database db = await DatabaseHandler.instance.database;
-    List<Map> campanhas = await db
-        .rawQuery("""SELECT camp.idCampanha, camp.idCriador, camp.nomeReceptor,
+    List<Map> campanhas = await db.rawQuery(
+        """SELECT camp.idCampanha, camp.idCriador AS idUsuario, camp.nomeReceptor,
               camp.idLocal, camp.tipoSanguineo, camp.qtdSolicitada,
               COUNT(d.idCampanha) AS qtdDoada, camp.dataInicio, camp.ativa,
               usr.nomeusuario, loc.idLocal, loc.nomeLocal, loc.logradouro,
@@ -18,6 +18,7 @@ class CampanhaController {
               INNER JOIN cidades AS c ON loc.idCidade == c.idCidade
               INNER JOIN estados AS e on c.idEstado == e.idEstado
               LEFT JOIN doacoes AS d on camp.idCampanha == d.idCampanha
+              WHERE camp.ativa == 1
               GROUP BY camp.idCampanha;""");
     return campanhas;
   }
@@ -29,11 +30,8 @@ class CampanhaController {
 
   void updateState(int idCompanha) async {
     Database db = await DatabaseHandler.instance.database;
-    QueryCursor countDoacoes =
-        await db.rawQueryCursor("""SELECT c.qtdSolicitada, COUNT(d.idDoacao)
-                                FROM campanhas as c
-                                INNER JOIN doacao AS d ON c.idCampnha == d.idCampanha
-                                WHERE  """, []);
+    await db.update('campanhas', {'ativa': 0},
+        where: 'idCampanha = ?', whereArgs: [idCompanha]);
   }
 
   void delete(campanha) async {}

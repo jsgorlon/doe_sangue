@@ -1,5 +1,5 @@
 import 'package:doe_sangue/controller/usuario.controller.dart';
-import 'package:doe_sangue/views/android/TabbedHome.page.dart';
+import 'package:doe_sangue/views/android/tabbedHome.page.dart';
 import 'package:doe_sangue/views/android/resetPassword.page.dart';
 import 'package:doe_sangue/views/android/signup.page.dart';
 import 'package:doe_sangue/models/usuario.dart';
@@ -13,7 +13,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-
   final Future<SharedPreferences> _pref = SharedPreferences.getInstance();
 
   final _conEmail = TextEditingController();
@@ -29,7 +28,6 @@ class _LoginPageState extends State<LoginPage> {
     } else if (senha.isEmpty) {
       alertDialog(context, "Por favor, infome a senha");
     } else {
-
       await usuarioController.loginUser(email, senha).then((usuario) {
         if (usuario != null) {
           setSP(usuario).whenComplete(() {
@@ -42,7 +40,7 @@ class _LoginPageState extends State<LoginPage> {
           alertDialog(context, "Usuario ou senha inválidos");
         }
       });
-    }    
+    }
   }
 
   Future setSP(Usuario usuario) async {
@@ -51,9 +49,7 @@ class _LoginPageState extends State<LoginPage> {
     sp.setString("nomeUsuario", usuario.nomeUsuario!);
     sp.setString("email", usuario.email!);
     sp.setInt("idUsuario", usuario.idUsuario!);
-    }
-  
-
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -126,17 +122,16 @@ class _LoginPageState extends State<LoginPage> {
               ),
               child: SizedBox.expand(
                 child: TextButton(
-                  onPressed: login,
-                  child: const Text(
-                    "Login",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                      fontSize: 20,
-                    ),
-                    textAlign: TextAlign.left,
-                  )
-                ),
+                    onPressed: login,
+                    child: const Text(
+                      "Login",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        fontSize: 20,
+                      ),
+                      textAlign: TextAlign.left,
+                    )),
               ),
             ),
             const SizedBox(

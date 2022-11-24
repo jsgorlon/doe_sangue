@@ -2,7 +2,7 @@
 
 import 'package:doe_sangue/controller/usuario.controller.dart';
 import 'package:doe_sangue/models/usuario.dart';
-import 'package:doe_sangue/views/android/TabbedHome.page.dart';
+import 'package:doe_sangue/views/android/tabbedHome.page.dart';
 import 'package:doe_sangue/views/android/update.page.dart';
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';

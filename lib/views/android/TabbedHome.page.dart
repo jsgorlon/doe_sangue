@@ -143,9 +143,7 @@ class _TabbedHomeState extends State<TabbedHome>
                       color: Color.fromARGB(171, 185, 47, 47),
                     ),
                     currentAccountPicture: CircleAvatar(
-                      backgroundImage: NetworkImage(
-                        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXA-Uu5DzOUC3DEEh789elx46nvfe-0s-7xg&usqp=CAU",
-                      ),
+                      backgroundImage: AssetImage('assets/images/noPhoto.png'),
                     ),
                     accountName: Text('${usuario.nomeUsuario}'), //user data
                     accountEmail: Text('${usuario.email}'), //user data

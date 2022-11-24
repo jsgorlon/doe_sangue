@@ -7,7 +7,6 @@ import 'package:doe_sangue/models/usuario.dart';
 import 'package:doe_sangue/services/location.service.dart';
 import 'package:doe_sangue/views/android/widgets/donation.confirmation.dialong.dart';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:maps_launcher/maps_launcher.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -41,17 +40,25 @@ class _CampanhaCardState extends State<CampanhaCard> {
 
   void getLocation() async {
     await locator.getCurrentLocation();
-    setState(() {
-      currentCity = locator.city;
-    });
+    if (mounted) {
+      setState(
+        () {
+          currentCity = locator.city;
+        },
+      );
+    }
   }
 
   Future<void> _refresh() {
-    setState(() {
-      campanhas = campanhaController.read();
-    });
+    if (mounted) {
+      setState(
+        () {
+          campanhas = campanhaController.read();
+        },
+      );
+    }
     return Future.delayed(
-      Duration(seconds: 1),
+      const Duration(seconds: 1),
     );
   }
 
@@ -67,54 +74,59 @@ class _CampanhaCardState extends State<CampanhaCard> {
           (e) => Usuario.fromMap(e),
         )
         .toList();
-    setState(() {
-      sessionUser = usuarios.first;
-    });
+    if (mounted) {
+      setState(
+        () {
+          sessionUser = usuarios.first;
+        },
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<Map<dynamic, dynamic>>>(
-        future: campanhas,
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (!snapshot.hasData) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          if (snapshot.hasError) return Text(snapshot.error!.toString());
-          return RefreshIndicator(
-            onRefresh: _refresh,
-            child: ListView.builder(
-              scrollDirection: Axis.vertical,
-              itemCount: snapshot.data.length,
-              itemBuilder: (_, index) {
-                var campanhas = snapshot.data!;
-                final campanha = Campanha.fromMap(campanhas[index]);
-                getLocation();
-                return Align(
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width - 20,
-                    child: Card(
-                      elevation: 10,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5)),
-                      child: ExpansionTile(
-                        title: Text(
-                            'Organizador: ${campanha.organizador!.nomeUsuario}'),
-                        subtitle: _cardSubtitle(campanha),
-                        textColor: Colors.redAccent,
-                        children: [
-                          _cardDetails(context, campanha),
-                        ],
-                      ),
+      future: campanhas,
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (!snapshot.hasData) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+        if (snapshot.hasError) return Text(snapshot.error!.toString());
+        return RefreshIndicator(
+          onRefresh: _refresh,
+          child: ListView.builder(
+            scrollDirection: Axis.vertical,
+            itemCount: snapshot.data.length,
+            itemBuilder: (_, index) {
+              var campanhas = snapshot.data!;
+              final campanha = Campanha.fromMap(campanhas[index]);
+              getLocation();
+              return Align(
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width - 20,
+                  child: Card(
+                    elevation: 10,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5)),
+                    child: ExpansionTile(
+                      title: Text(
+                          'Organizador: ${campanha.organizador!.nomeUsuario}'),
+                      subtitle: _cardSubtitle(campanha),
+                      textColor: Colors.redAccent,
+                      children: [
+                        _cardDetails(context, campanha),
+                      ],
                     ),
                   ),
-                );
-              },
-            ),
-          );
-        });
+                ),
+              );
+            },
+          ),
+        );
+      },
+    );
   }
 
   Widget _cardSubtitle(Campanha campanha) {
